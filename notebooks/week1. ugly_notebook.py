@@ -23,7 +23,7 @@ from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
 # COMMAND ----------
 
-filepath = "/Volumes/mlops_dev/house_prices/data/data.csv"
+filepath = "/Volumes/mlops_with_databricks/house_prices/data/data.csv"
 # Load the data
 df = pd.read_csv(filepath)
 
