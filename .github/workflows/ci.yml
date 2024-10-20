@@ -23,6 +23,6 @@ jobs:
       - name: setup pre-commit checks
         run: |
           pip install pre-commit
-      - name: Run pre-commit checks          
+      - name: Run pre-commit checks
         run: |
           pre-commit run --all-files
