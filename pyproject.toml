@@ -34,10 +34,10 @@ where =["src"]
 include = ["house_price*"]
 
 # [tool.setuptools]
-# packages = ["power_consumption"]
+# packages = ["house_price"]
 
 # [tool.setuptools.package-data]
-# power_consumption = ["**/*.py"]
+# house_price = ["**/*.py"]
 
 #include = ["my_package", "my_other_package"]
 #exclude = ["my_package.tests*"]
