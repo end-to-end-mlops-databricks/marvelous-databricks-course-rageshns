@@ -1,17 +1,17 @@
-import yaml
 import logging
+
+import yaml
 
 from house_price.data_processor import DataProcessor
 from house_price.price_model import PriceModel
-from house_price.utils import visualize_results, plot_feature_importance
+from house_price.utils import plot_feature_importance, visualize_results
 
-
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 logger = logging.getLogger(__name__)
 
 
 # Load configuration
-with open('project_config.yml', 'r') as file:
+with open("project_config.yml", "r") as file:
     config = yaml.safe_load(file)
 
 print("Configuration loaded:")
@@ -19,7 +19,7 @@ print(yaml.dump(config, default_flow_style=False))
 
 
 # Initialize DataProcessor
-data_processor = DataProcessor('data/data.csv', config)
+data_processor = DataProcessor("data/data.csv", config)
 logger.info("DataProcessor initialized.")
 
 # Preprocess the data
@@ -28,7 +28,7 @@ logger.info("Data preprocessed.")
 
 # Split the data
 X_train, X_test, y_train, y_test = data_processor.split_data()
-logger.info(f"Data split into training and test sets.")
+logger.info("Data split into training and test sets.")
 logger.debug(f"Training set shape: {X_train.shape}, Test set shape: {X_test.shape}")
 
 print("Training set shape:", X_train.shape)

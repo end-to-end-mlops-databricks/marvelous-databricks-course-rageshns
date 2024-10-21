@@ -28,12 +28,18 @@ uv lock
 ```
 
 
-'''
+```
 pre-commit run --all-files
-'''
-'''
+```
+```
 uv build
-'''
-'''
+```
+```
 databricks fs cp dist/mlops_with_databricks-0.0.1-py3-none-any.whl  dbfs:/Volumes/mlops_with_databricks/house_prices/data/data.csv/ --profile mlops_training
-'''
+```
+```
+databricks fs cp dist/mlops_with_databricks-0.0.1-py3-none-any.whl  dbfs:/Volumes/mlops_dev/house_prices/data/data.csv/ --profile mlops_training
+```
+```
+ uv pip install -e .
+ ```
