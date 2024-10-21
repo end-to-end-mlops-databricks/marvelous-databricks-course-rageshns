@@ -33,6 +33,20 @@ build-backend = "setuptools.build_meta"
 where =["src"]
 include = ["house_price*"]
 
+# [tool.setuptools]
+# packages = ["power_consumption"]
+
+# [tool.setuptools.package-data]
+# power_consumption = ["**/*.py"]
+
+#include = ["my_package", "my_other_package"]
+#exclude = ["my_package.tests*"]
+
+
+#[tool.setuptools.package-data]
+#"*" = ["*.json"]
+
+
 [tool.ruff]
 line-length = 120
 select = [
