@@ -16,6 +16,9 @@ dependencies = [
     "scipy>=1.14.1, <2",
     "matplotlib>=3.9.2, <4",
     "databricks-feature-engineering>=0.6, <1",
+    "databricks-feature-lookup==1.2.0",
+    "databricks-sdk==0.32.0",
+    "pydantic==2.9.2",
     "pre-commit>=4.0.1",
 ]
 
