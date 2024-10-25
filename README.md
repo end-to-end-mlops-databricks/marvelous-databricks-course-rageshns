@@ -44,3 +44,4 @@ databricks fs cp dist/mlops_with_databricks-0.0.1-py3-none-any.whl  dbfs:/Volume
 ```
  uv pip install -e .
  ```
+develop2
