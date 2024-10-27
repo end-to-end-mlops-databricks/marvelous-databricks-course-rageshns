@@ -1,7 +1,6 @@
 import logging
 
-import yaml
-
+from house_price.config import ProjectConfig
 from house_price.data_processor import DataProcessor
 from house_price.price_model import PriceModel
 from house_price.utils import plot_feature_importance, visualize_results
@@ -11,20 +10,12 @@ logger = logging.getLogger(__name__)
 
 
 # Load configuration
-with open("project_config.yml", "r") as file:
-    config = yaml.safe_load(file)
+config = ProjectConfig.from_yaml("project_config.yml")
 
-logger.info("Configuration loaded:")
-print(yaml.dump(config, default_flow_style=False))
+# Initialise data processor and preprocess data
+data_processor = DataProcessor("data/data.csv", config=ProjectConfig)
+data_processor.preprocess()
 
-
-# Initialize DataProcessor
-data_processor = DataProcessor("data/data.csv", config)
-logger.info("DataProcessor initialized.")
-
-# Preprocess the data
-data_processor.preprocess_data()
-logger.info("Data preprocessed.")
 
 # Split the data
 X_train, X_test, y_train, y_test = data_processor.split_data()

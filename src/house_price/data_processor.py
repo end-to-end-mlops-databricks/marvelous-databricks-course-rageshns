@@ -1,34 +1,20 @@
-import datetime
+# import datetime
 from datetime import datetime
 
 import pandas as pd
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import current_timestamp, to_utc_timestamp
-from sklearn.compose import ColumnTransformer
-from sklearn.impute import SimpleImputer
 from sklearn.model_selection import train_test_split
-from sklearn.pipeline import Pipeline
-from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
 from house_price.config import ProjectConfig
 
 
 class DataProcessor:
-    # def __init__(self, filepath, config):
-    #     self.df = self.load_data(filepath)
-    #     self.config = config
-    #     self.X = None
-    #     self.y = None
-    #     self.preprocessor = None
-
     def __init__(self, pandas_df: pd.DataFrame, config: ProjectConfig):
         self.df = pandas_df  # Store the DataFrame as self.df
         self.config = config  # Store the configuration
 
-    # def load_data(self, filepath):
-    #     return pd.read_csv(filepath)
-
-    def preprocess_data(self):
+    def preprocess(self):
         """Preprocess the DataFrame stored in self.df"""
         # Handle missing values and convert data types as needed
         self.df["LotFrontage"] = pd.to_numeric(self.df["LotFrontage"], errors="coerce")
@@ -65,34 +51,6 @@ class DataProcessor:
         target = self.config.target
         relevant_columns = cat_features + num_features + [target] + ["Id"]
         self.df = self.df[relevant_columns]
-
-        # Remove rows with missing target
-        target = self.config["target"]
-        self.df = self.df.dropna(subset=[target])
-
-        # Separate features and target
-        self.X = self.df[self.config["num_features"] + self.config["cat_features"]]
-        self.y = self.df[target]
-
-        # Create preprocessing steps for numeric and categorical data
-        numeric_transformer = Pipeline(
-            steps=[("imputer", SimpleImputer(strategy="median")), ("scaler", StandardScaler())]
-        )
-
-        categorical_transformer = Pipeline(
-            steps=[
-                ("imputer", SimpleImputer(strategy="constant", fill_value="missing")),
-                ("onehot", OneHotEncoder(handle_unknown="ignore")),
-            ]
-        )
-
-        # Combine preprocessing steps
-        self.preprocessor = ColumnTransformer(
-            transformers=[
-                ("num", numeric_transformer, self.config["num_features"]),
-                ("cat", categorical_transformer, self.config["cat_features"]),
-            ]
-        )
 
     def split_data(self, test_size=0.2, random_state=42):
         """Split the DataFrame (self.df) into training and test sets."""

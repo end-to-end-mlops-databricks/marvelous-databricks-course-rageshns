@@ -45,3 +45,6 @@ databricks fs cp dist/mlops_with_databricks-0.0.1-py3-none-any.whl  dbfs:/Volume
  uv pip install -e .
  ```
 develop2
+
+
+uv python pin 3.11.9  -> .python-version --> 3.11.9

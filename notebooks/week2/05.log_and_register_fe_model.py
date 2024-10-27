@@ -3,25 +3,22 @@
 
 # COMMAND ----------
 
-dbutils.library.restartPython() 
+dbutils.library.restartPython()
 
 # COMMAND ----------
-import yaml
-from databricks import feature_engineering
-from pyspark.sql import SparkSession
-from databricks.sdk import WorkspaceClient
 import mlflow
-from pyspark.sql import functions as F
+from databricks import feature_engineering
+from databricks.feature_engineering import FeatureFunction, FeatureLookup
+from databricks.sdk import WorkspaceClient
 from lightgbm import LGBMRegressor
 from mlflow.models import infer_signature
+from pyspark.sql import SparkSession
 from sklearn.compose import ColumnTransformer
-from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
+from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder
-from datetime import datetime
-from databricks.feature_engineering import FeatureFunction, FeatureLookup
-from house_price.config import ProjectConfig
 
+from house_price.config import ProjectConfig
 
 # Initialize the Databricks session and clients
 spark = SparkSession.builder.getOrCreate()
@@ -66,17 +63,21 @@ CREATE OR REPLACE TABLE {catalog_name}.{schema_name}.house_features
  GarageCars INT);
 """)
 
-spark.sql(f"ALTER TABLE {catalog_name}.{schema_name}.house_features "
-          "ADD CONSTRAINT house_pk PRIMARY KEY(Id);")
+spark.sql(f"ALTER TABLE {catalog_name}.{schema_name}.house_features " "ADD CONSTRAINT house_pk PRIMARY KEY(Id);")
 
-spark.sql(f"ALTER TABLE {catalog_name}.{schema_name}.house_features "
-          "SET TBLPROPERTIES (delta.enableChangeDataFeed = true);")
+spark.sql(
+    f"ALTER TABLE {catalog_name}.{schema_name}.house_features " "SET TBLPROPERTIES (delta.enableChangeDataFeed = true);"
+)
 
 # Insert data into the feature table from both train and test sets
-spark.sql(f"INSERT INTO {catalog_name}.{schema_name}.house_features "
-          f"SELECT Id, OverallQual, GrLivArea, GarageCars FROM {catalog_name}.{schema_name}.train_set")
-spark.sql(f"INSERT INTO {catalog_name}.{schema_name}.house_features "
-          f"SELECT Id, OverallQual, GrLivArea, GarageCars FROM {catalog_name}.{schema_name}.test_set")
+spark.sql(
+    f"INSERT INTO {catalog_name}.{schema_name}.house_features "
+    f"SELECT Id, OverallQual, GrLivArea, GarageCars FROM {catalog_name}.{schema_name}.train_set"
+)
+spark.sql(
+    f"INSERT INTO {catalog_name}.{schema_name}.house_features "
+    f"SELECT Id, OverallQual, GrLivArea, GarageCars FROM {catalog_name}.{schema_name}.test_set"
+)
 
 # COMMAND ----------
 # Define a function to calculate the house's age using the current year and YearBuilt
@@ -114,7 +115,7 @@ training_set = fe.create_training_set(
             input_bindings={"year_built": "YearBuilt"},
         ),
     ],
-    exclude_columns=["update_timestamp_utc"]
+    exclude_columns=["update_timestamp_utc"],
 )
 
 # Load feature-engineered DataFrame
@@ -130,16 +131,13 @@ y_test = test_set[target]
 preprocessor = ColumnTransformer(
     transformers=[("cat", OneHotEncoder(handle_unknown="ignore"), cat_features)], remainder="passthrough"
 )
-pipeline = Pipeline(
-    steps=[("preprocessor", preprocessor), ("regressor", LGBMRegressor(**parameters))]
-)
+pipeline = Pipeline(steps=[("preprocessor", preprocessor), ("regressor", LGBMRegressor(**parameters))])
 
 # Set and start MLflow experiment
 mlflow.set_experiment(experiment_name="/Shared/house-prices-fe")
 git_sha = "ffa63b430205ff7"
 
-with mlflow.start_run(tags={"branch": "week2",
-                            "git_sha": f"{git_sha}"}) as run:
+with mlflow.start_run(tags={"branch": "week2", "git_sha": f"{git_sha}"}) as run:
     run_id = run.info.run_id
     pipeline.fit(X_train, y_train)
     y_pred = pipeline.predict(X_test)
@@ -169,8 +167,5 @@ with mlflow.start_run(tags={"branch": "week2",
         signature=signature,
     )
 mlflow.register_model(
-    model_uri=f'runs:/{run_id}/lightgbm-pipeline-model-fe',
-    name=f"{catalog_name}.{schema_name}.house_prices_model_fe")
-    
-
-
+    model_uri=f"runs:/{run_id}/lightgbm-pipeline-model-fe", name=f"{catalog_name}.{schema_name}.house_prices_model_fe"
+)
