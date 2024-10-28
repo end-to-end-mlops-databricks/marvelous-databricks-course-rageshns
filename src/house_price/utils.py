@@ -25,6 +25,7 @@ def remove_outliers(
         df = df[~((df[feature] < (Q1 - 1.5 * IQR)) | (df[feature] > (Q3 + 1.5 * IQR)))]
     return df
 
+
 def visualize_results(y_test, y_pred):
     plt.figure(figsize=(10, 6))
     plt.scatter(y_test, y_pred, alpha=0.5)
@@ -35,6 +36,7 @@ def visualize_results(y_test, y_pred):
     plt.tight_layout()
     plt.show()
 
+
 def plot_feature_importance(feature_importance, feature_names, top_n=10):
     plt.figure(figsize=(10, 6))
     sorted_idx = np.argsort(feature_importance)
@@ -44,6 +46,7 @@ def plot_feature_importance(feature_importance, feature_names, top_n=10):
     plt.title(f"Top {top_n} Feature Importance")
     plt.tight_layout()
     plt.show()
+
 
 def adjust_predictions(predictions, scale_factor=1.3):
     return predictions * scale_factor
