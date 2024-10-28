@@ -1,11 +1,13 @@
 # Databricks notebook source
-# MAGIC %pip install mlops_with_databricks-0.0.1-py3-none-any.whl
+# MAGIC %pip install housing_price-0.0.1-py3-none-any.whl
 
 # COMMAND ----------
 
 dbutils.library.restartPython()
 
 # COMMAND ----------
+from datetime import datetime
+
 import mlflow
 from databricks import feature_engineering
 from databricks.feature_engineering import FeatureFunction, FeatureLookup
@@ -121,10 +123,14 @@ training_set = fe.create_training_set(
 # Load feature-engineered DataFrame
 training_df = training_set.load_df().toPandas()
 
+# Calculate house_age for training and test set
+current_year = datetime.now().year
+test_set["house_age"] = current_year - test_set["YearBuilt"]
+
 # Split features and target
-X_train = training_df[num_features + cat_features]
+X_train = training_df[num_features + cat_features + ["house_age"]]
 y_train = training_df[target]
-X_test = test_set[num_features + cat_features]
+X_test = test_set[num_features + cat_features + ["house_age"]]
 y_test = test_set[target]
 
 # Setup preprocessing and model pipeline
