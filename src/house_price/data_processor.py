@@ -54,9 +54,9 @@ class DataProcessor:
         #             self.df[col].fillna(self.df[col].mean(), inplace=True)
 
         # Impute missing values for categorical features with the most frequent value
-        for col in cat_features:
-            if self.df[col].isnull().any():
-                self.df[col].fillna(self.df[col].mode()[0], inplace=True)
+        # for col in cat_features:
+        #     if self.df[col].isnull().any():
+        #         self.df[col].fillna(self.df[col].mode()[0], inplace=True)
 
         # Handle missing values and convert data types as needed
         # self.df["LotFrontage"] = pd.to_numeric(self.df["LotFrontage"], errors="coerce")
