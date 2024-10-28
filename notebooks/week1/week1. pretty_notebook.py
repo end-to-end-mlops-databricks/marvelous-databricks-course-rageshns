@@ -1,4 +1,11 @@
 # Databricks notebook source
+# MAGIC %pip install /Volumes/mlops_students/rageshns/data/mlops_with_databricks-0.0.1-py3-none-any.whl
+
+# COMMAND ----------
+
+dbutils.library.restartPython()
+
+# COMMAND ----------
 
 import yaml
 
@@ -7,7 +14,7 @@ from house_price.price_model import PriceModel
 from house_price.utils import plot_feature_importance, visualize_results
 
 # Load configuration
-with open("../project_config.yml", "r") as file:
+with open("../../project_config.yml", "r") as file:
     config = yaml.safe_load(file)
 
 print("Configuration loaded:")
