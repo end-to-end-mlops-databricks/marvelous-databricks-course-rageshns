@@ -30,6 +30,8 @@ class DataProcessor:
         # Fill missing values with mean or default values
         self.df.fillna(0, inplace=True)
 
+        self.df.dropna(inplace=True)
+
         # Handle numeric features
         num_features = self.config.num_features
         for col in num_features:
