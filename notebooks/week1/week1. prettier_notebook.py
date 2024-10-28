@@ -39,7 +39,8 @@ def load_data(filepath):
     return df
 
 
-filepath = "/Volumes/mlops_dev/house_prices/data/data.csv"
+filepath = "/Volumes/mlops_students/rageshns/data/data.csv"
+
 df = load_data(filepath)
 
 # COMMAND ----------

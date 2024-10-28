@@ -1,5 +1,5 @@
-catalog_name: mlops_dev
-schema_name: house_prices
+catalog_name: mlops_students
+schema_name: rageshns
 
 parameters:
   learning_rate: 0.01

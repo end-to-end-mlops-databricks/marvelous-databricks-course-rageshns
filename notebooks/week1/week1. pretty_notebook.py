@@ -15,7 +15,7 @@ print(yaml.dump(config, default_flow_style=False))
 
 # COMMAND ----------
 # Initialize DataProcessor
-data_processor = DataProcessor("/Volumes/mlops_dev/house_prices/data/data.csv", config)
+data_processor = DataProcessor("/Volumes/mlops_students/rageshns/data/data.csv", config)
 
 # Preprocess the data
 data_processor.preprocess_data()
