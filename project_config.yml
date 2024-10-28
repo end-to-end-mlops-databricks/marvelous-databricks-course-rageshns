@@ -5,6 +5,10 @@ parameters:
   learning_rate: 0.01
   n_estimators: 1000
   max_depth: 6
+  drop_threshold: 0.8  # Threshold for dropping columns with missing values
+  lower_bound: 0.05    # Lower quantile bound for outlier detection
+  upper_bound: 0.95    # Upper quantile bound for outlier detection
+
 
 num_features:
   - LotArea

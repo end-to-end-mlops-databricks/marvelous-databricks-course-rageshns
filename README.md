@@ -27,10 +27,13 @@ venv\Scripts\activate     -windows
 uv pip install -r pyproject.toml --all-extras
 uv lock
 ```
-
+poetry new --src my-package-name
+and it will create the pyproject.toml along with a src folder (with init.py) and a tests folder (with init.py), so you dont have to do everything manually
 
 ```
 pre-commit run --all-files
+uv pip install pre-commit
+uv run pre-commit run --all-files
 ```
 ```
 uv build
