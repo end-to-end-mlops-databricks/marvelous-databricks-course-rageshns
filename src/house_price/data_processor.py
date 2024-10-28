@@ -27,9 +27,9 @@ class DataProcessor:
         self.df["GarageAge"] = current_year - self.df["GarageYrBlt"]
         self.df.drop(columns=["GarageYrBlt"], inplace=True)
 
-        # remove for NaN
-        self.df.dropna(inplace=True)
-
+        # Fill missing values with mean or default values
+        self.df.fillna(0, inplace=True)
+        
         # Handle numeric features
         num_features = self.config.num_features
         for col in num_features:
