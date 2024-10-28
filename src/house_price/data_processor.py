@@ -1,5 +1,4 @@
 # import datetime
-from datetime import datetime
 
 import pandas as pd
 from pyspark.sql import SparkSession
@@ -60,16 +59,16 @@ class DataProcessor:
                 self.df[col].fillna(self.df[col].mode()[0], inplace=True)
 
         # Handle missing values and convert data types as needed
-        self.df["LotFrontage"] = pd.to_numeric(self.df["LotFrontage"], errors="coerce")
+        # self.df["LotFrontage"] = pd.to_numeric(self.df["LotFrontage"], errors="coerce")
 
-        self.df["GarageYrBlt"] = pd.to_numeric(self.df["GarageYrBlt"], errors="coerce")
-        median_year = self.df["GarageYrBlt"].median()
+        # self.df["GarageYrBlt"] = pd.to_numeric(self.df["GarageYrBlt"], errors="coerce")
+        # median_year = self.df["GarageYrBlt"].median()
 
-        self.df["GarageYrBlt"].fillna(median_year, inplace=True)
-        current_year = datetime.now().year
+        # self.df["GarageYrBlt"].fillna(median_year, inplace=True)
+        # current_year = datetime.now().year
 
-        self.df["GarageAge"] = current_year - self.df["GarageYrBlt"]
-        self.df.drop(columns=["GarageYrBlt"], inplace=True)
+        # self.df["GarageAge"] = current_year - self.df["GarageYrBlt"]
+        # self.df.drop(columns=["GarageYrBlt"], inplace=True)
 
         # Fill missing values with mean or default values
         # self.df.fillna(0, inplace=True)
@@ -77,14 +76,14 @@ class DataProcessor:
         # self.df.dropna(inplace=True)
 
         # Fill missing values with mean or default values
-        self.df.fillna(
-            {
-                "LotFrontage": self.df["LotFrontage"].mean(),
-                "MasVnrType": "None",
-                "MasVnrArea": 0,
-            },
-            inplace=True,
-        )
+        # self.df.fillna(
+        #     {
+        #         "LotFrontage": self.df["LotFrontage"].mean(),
+        #         "MasVnrType": "None",
+        #         "MasVnrArea": 0,
+        #     },
+        #     inplace=True,
+        # )
 
         # Handle missing values in the target column by replacing them with a specific value (e.g., 220000)
         target = self.config.target
