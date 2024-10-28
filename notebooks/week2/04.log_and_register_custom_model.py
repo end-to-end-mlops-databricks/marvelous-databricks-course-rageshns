@@ -44,7 +44,7 @@ spark = SparkSession.builder.getOrCreate()
 
 run_id = mlflow.search_runs(
     experiment_names=["/Shared/house-prices"],
-    filter_string="tags.branch='week2'",
+    filter_string="tags.branch='develop2'",
 ).run_id[0]
 
 model = mlflow.sklearn.load_model(f"runs:/{run_id}/lightgbm-pipeline-model")
@@ -89,7 +89,7 @@ print("Example Prediction:", example_prediction)
 mlflow.set_experiment(experiment_name="/Shared/house-prices-pyfunc")
 git_sha = "ffa63b430205ff7"
 
-with mlflow.start_run(tags={"branch": "week2", "git_sha": f"{git_sha}"}) as run:
+with mlflow.start_run(tags={"branch": "develop2", "git_sha": f"{git_sha}"}) as run:
     run_id = run.info.run_id
     signature = infer_signature(model_input=X_train, model_output={"Prediction": example_prediction})
     dataset = mlflow.data.from_spark(train_set, table_name=f"{catalog_name}.{schema_name}.train_set", version="0")
