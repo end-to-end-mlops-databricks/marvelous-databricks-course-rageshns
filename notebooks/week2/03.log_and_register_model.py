@@ -1,5 +1,5 @@
 # Databricks notebook source
-
+# MAGIC %pip install mlops_with_databricks-0.0.1-py3-none-any.whl
 import mlflow
 from lightgbm import LGBMRegressor
 from mlflow.models import infer_signature
