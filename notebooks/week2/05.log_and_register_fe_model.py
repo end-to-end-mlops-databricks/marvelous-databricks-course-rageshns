@@ -1,5 +1,5 @@
 # Databricks notebook source
-# MAGIC %pip install /Volumes/mlops_students/rageshns/data/mlops_with_databricks-0.0.1-py3-none-any.whl
+# MAGIC %pip install mlops_with_databricks-0.0.1-py3-none-any.whl
 
 # COMMAND ----------
 
