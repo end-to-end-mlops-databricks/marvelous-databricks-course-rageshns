@@ -31,7 +31,7 @@ data_processor = DataProcessor(pandas_df=df, config=config)
 logger.info("DataProcessor initialized.")
 
 # Preprocess the data
-data_processor.preprocess()
+data_processor.preprocess_local()
 logger.info("Data preprocessed.")
 
 # Split the data

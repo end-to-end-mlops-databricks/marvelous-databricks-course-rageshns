@@ -27,7 +27,7 @@ venv\Scripts\activate     -windows
 uv sync
 uv pip install -r pyproject.toml --all-extras
 or
-run uv sync —all-extras
+uv sync --all-extras
 
 uv lock
 ```
