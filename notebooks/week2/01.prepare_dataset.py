@@ -7,16 +7,22 @@ dbutils.library.restartPython()
 
 # COMMAND ----------
 
+import yaml
 from pyspark.sql import SparkSession
 
-from house_price.config import ProjectConfig
 from house_price.data_processor import DataProcessor
 
 spark = SparkSession.builder.getOrCreate()
 
 # COMMAND ----------
 
-config = ProjectConfig.from_yaml(config_path="../../project_config.yml")
+# config = ProjectConfig.from_yaml(config_path="../../project_config.yml")
+# Load configuration
+with open("project_config.yml", "r") as file:
+    config = yaml.safe_load(file)
+
+print("Configuration loaded:")
+print(yaml.dump(config, default_flow_style=False))
 
 # COMMAND ----------
 # Load the house prices dataset

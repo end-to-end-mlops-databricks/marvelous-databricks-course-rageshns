@@ -18,3 +18,7 @@ class ProjectConfig(BaseModel):
         with open(config_path, "r") as f:
             config_dict = yaml.safe_load(f)
         return cls(**config_dict)
+
+    @classmethod
+    def from_dict(cls, config_dict: dict):
+        return cls(**config_dict)

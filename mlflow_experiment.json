@@ -1,0 +1,15 @@
+{
+    "_experiment_id": "2731380862443175",
+    "_name": "/Shared/house-price-basic",
+    "_artifact_location": "dbfs:/databricks/mlflow-tracking/2731380862443175",
+    "_lifecycle_stage": "active",
+    "_tags": {
+        "mlflow.experiment.sourceName": "/Shared/house-price-basic",
+        "mlflow.ownerId": "7386728468604455",
+        "mlflow.ownerEmail": "jarb8926@gmail.com",
+        "mlflow.experimentType": "MLFLOW_EXPERIMENT",
+        "repository_name": "house-price"
+    },
+    "_creation_time": 1730038290169,
+    "_last_update_time": 1730123393155
+}

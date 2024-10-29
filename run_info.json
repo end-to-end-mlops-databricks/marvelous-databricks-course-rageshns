@@ -1,0 +1,39 @@
+{
+    "info": {
+        "artifact_uri": "dbfs:/databricks/mlflow-tracking/2731380862443175/884a26bd935d41ad938375419be6e6ce/artifacts",
+        "end_time": 1730210842068,
+        "experiment_id": "2731380862443175",
+        "lifecycle_stage": "active",
+        "run_id": "884a26bd935d41ad938375419be6e6ce",
+        "run_name": "demo-run",
+        "run_uuid": "884a26bd935d41ad938375419be6e6ce",
+        "start_time": 1730210836222,
+        "status": "FINISHED",
+        "user_id": ""
+    },
+    "data": {
+        "metrics": {
+            "metric1": 1.0,
+            "metric2": 2.0
+        },
+        "params": {
+            "type": "demo"
+        },
+        "tags": {
+            "branch": "week2",
+            "git_sha": "ffa63b430205ff7",
+            "mlflow.databricks.cluster.id": "1019-154602-5rcc6z0c",
+            "mlflow.databricks.cluster.info": "{\"cluster_name\":\"Ragesh NS's Cluster\",\"spark_version\":\"15.4.x-scala2.12\",\"node_type_id\":\"i3.xlarge\",\"driver_node_type_id\":\"i3.xlarge\",\"autotermination_minutes\":120,\"disk_spec\":{\"disk_count\":0},\"num_workers\":0}",
+            "mlflow.databricks.cluster.libraries": "{\"installable\":[],\"redacted\":[]}",
+            "mlflow.note.content": "demo run",
+            "mlflow.runColor": "#5bc5db",
+            "mlflow.runName": "demo-run",
+            "mlflow.source.name": "c:\\Databricks_MLOPS_EOD\\marvelous-databricks-course-rageshns\\notebooks\\week2\\02.mlflow_experiment.py",
+            "mlflow.source.type": "LOCAL",
+            "mlflow.user": "rageshns@gmail.com"
+        }
+    },
+    "inputs": {
+        "dataset_inputs": []
+    }
+}

@@ -1,6 +1,7 @@
 import logging
 
 import yaml
+from databricks.connect import DatabricksSession
 
 from house_price.data_processor import DataProcessor
 from house_price.price_model import PriceModel
@@ -9,21 +10,28 @@ from house_price.utils import plot_feature_importance, visualize_results
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 logger = logging.getLogger(__name__)
 
+volume_path = "/Volumes/mlops_students/rageshns/data/"
+file_name = "data.csv"
+data_path = volume_path + file_name
 
 # Load configuration
 with open("project_config.yml", "r") as file:
     config = yaml.safe_load(file)
 
+
 logger.info("Configuration loaded:")
 print(yaml.dump(config, default_flow_style=False))
 
+spark = DatabricksSession.builder.profile("mlops_training").getOrCreate()
+df = spark.read.csv(data_path, header=True, inferSchema=True).toPandas()
+
 
 # Initialize DataProcessor
-data_processor = DataProcessor("data/data.csv", config)
+data_processor = DataProcessor(pandas_df=df, config=config)
 logger.info("DataProcessor initialized.")
 
 # Preprocess the data
-data_processor.preprocess_data()
+data_processor.preprocess()
 logger.info("Data preprocessed.")
 
 # Split the data

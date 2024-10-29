@@ -1,7 +1,7 @@
-import pandas as pd
-import yaml  # Fixed the import statement
 import matplotlib.pyplot as plt
 import numpy as np
+import pandas as pd
+
 
 def remove_outliers(
     df: pd.DataFrame, num_features: list, lower_bound: float = 0.05, upper_bound: float = 0.95
