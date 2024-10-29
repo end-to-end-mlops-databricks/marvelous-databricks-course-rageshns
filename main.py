@@ -35,7 +35,7 @@ data_processor.preprocess()
 logger.info("Data preprocessed.")
 
 # Split the data
-X_train, X_test, y_train, y_test = data_processor.split_data()
+X_train, X_test, y_train, y_test = data_processor.split_data_x_y()
 logger.info("Data split into training and test sets.")
 logger.debug(f"Training set shape: {X_train.shape}, Test set shape: {X_test.shape}")
 

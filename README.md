@@ -24,7 +24,11 @@ uv venv -p 3.11.9 venv
 source venv/bin/activate  -linux
 venv\Scripts\activate     -windows
 .venv\Scripts\activate   -windows
+uv sync
 uv pip install -r pyproject.toml --all-extras
+or
+run uv sync —all-extras
+
 uv lock
 ```
 poetry new --src my-package-name

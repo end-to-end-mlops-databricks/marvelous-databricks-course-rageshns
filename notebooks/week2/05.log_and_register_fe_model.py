@@ -31,7 +31,6 @@ fe = feature_engineering.FeatureEngineeringClient()
 # COMMAND ----------
 
 
-
 # COMMAND ----------
 
 mlflow.set_registry_uri("databricks-uc")

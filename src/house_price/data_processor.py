@@ -143,6 +143,9 @@ class DataProcessor:
         train_set, test_set = train_test_split(self.df, test_size=test_size, random_state=random_state)
         return train_set, test_set
 
+    def split_data_x_y(self, test_size=0.2, random_state=42):
+        return train_test_split(self.X, self.y, test_size=test_size, random_state=random_state)
+
     def save_to_catalog(self, train_set: pd.DataFrame, test_set: pd.DataFrame, spark: SparkSession):
         """Save the train and test sets into Databricks tables."""
 
