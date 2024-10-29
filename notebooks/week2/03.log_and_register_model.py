@@ -1,12 +1,13 @@
 # Databricks notebook source
 # MAGIC %pip install mlops_with_databricks-0.0.1-py3-none-any.whl
-
+# MAGIC
 
 # COMMAND ----------
 
 dbutils.library.restartPython()
 
 # COMMAND ----------
+
 import mlflow
 from lightgbm import LGBMRegressor
 from mlflow.models import infer_signature
@@ -34,6 +35,7 @@ catalog_name = config.catalog_name
 schema_name = config.schema_name
 
 # COMMAND ----------
+
 spark = SparkSession.builder.getOrCreate()
 
 # Load training and testing sets from Databricks tables
@@ -48,6 +50,7 @@ X_test = test_set[num_features + cat_features]
 y_test = test_set[target]
 
 # COMMAND ----------
+
 # Define the preprocessor for categorical features
 preprocessor = ColumnTransformer(
     transformers=[("cat", OneHotEncoder(handle_unknown="ignore"), cat_features)], remainder="passthrough"
@@ -58,12 +61,13 @@ pipeline = Pipeline(steps=[("preprocessor", preprocessor), ("regressor", LGBMReg
 
 
 # COMMAND ----------
+
 mlflow.set_experiment(experiment_name="/Shared/house-prices")
 git_sha = "ffa63b430205ff7"
 
 # Start an MLflow run to track the training process
 with mlflow.start_run(
-    tags={"git_sha": f"{git_sha}", "branch": "week2"},
+    tags={"git_sha": f"{git_sha}", "branch": "develop2"},
 ) as run:
     run_id = run.info.run_id
 
@@ -94,6 +98,7 @@ with mlflow.start_run(
 
 
 # COMMAND ----------
+
 model_version = mlflow.register_model(
     model_uri=f"runs:/{run_id}/lightgbm-pipeline-model",
     name=f"{catalog_name}.{schema_name}.house_prices_model_basic",
@@ -101,9 +106,8 @@ model_version = mlflow.register_model(
 )
 
 # COMMAND ----------
+
 run = mlflow.get_run(run_id)
 dataset_info = run.inputs.dataset_inputs[0].dataset
 dataset_source = mlflow.data.get_source(dataset_info)
 dataset_source.load()
-
-# COMMAND ----------

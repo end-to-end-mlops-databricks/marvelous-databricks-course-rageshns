@@ -1,11 +1,12 @@
 # Databricks notebook source
-# MAGIC %pip install housing_price-0.0.1-py3-none-any.whl
+# MAGIC %pip install mlops_with_databricks-0.0.1-py3-none-any.whl
 
 # COMMAND ----------
 
 dbutils.library.restartPython()
 
 # COMMAND ----------
+
 from datetime import datetime
 
 import mlflow
@@ -29,6 +30,8 @@ fe = feature_engineering.FeatureEngineeringClient()
 
 # COMMAND ----------
 
+
+
 # COMMAND ----------
 
 mlflow.set_registry_uri("databricks-uc")
@@ -50,12 +53,14 @@ function_name = f"{catalog_name}.{schema_name}.calculate_house_age"
 
 
 # COMMAND ----------
+
 # Load training and test sets
 train_set = spark.table(f"{catalog_name}.{schema_name}.train_set")
 test_set = spark.table(f"{catalog_name}.{schema_name}.test_set")
 
 
 # COMMAND ----------
+
 # Create or replace the house_features table
 spark.sql(f"""
 CREATE OR REPLACE TABLE {catalog_name}.{schema_name}.house_features
@@ -82,6 +87,7 @@ spark.sql(
 )
 
 # COMMAND ----------
+
 # Define a function to calculate the house's age using the current year and YearBuilt
 spark.sql(f"""
 CREATE OR REPLACE FUNCTION {function_name}(year_built INT)
@@ -92,7 +98,9 @@ from datetime import datetime
 return datetime.now().year - year_built
 $$
 """)
+
 # COMMAND ----------
+
 # Load training and test sets
 train_set = spark.table(f"{catalog_name}.{schema_name}.train_set").drop("OverallQual", "GrLivArea", "GarageCars")
 test_set = spark.table(f"{catalog_name}.{schema_name}.test_set").toPandas()

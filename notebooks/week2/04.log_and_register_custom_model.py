@@ -1,6 +1,6 @@
 # Databricks notebook source
 # MAGIC %pip install mlops_with_databricks-0.0.1-py3-none-any.whl
-
+# MAGIC
 
 # COMMAND ----------
 
@@ -8,6 +8,7 @@ dbutils.library.restartPython()
 
 
 # COMMAND ----------
+
 import json
 
 import mlflow
@@ -66,6 +67,7 @@ class HousePriceModelWrapper(mlflow.pyfunc.PythonModel):
 
 
 # COMMAND ----------
+
 train_set = spark.table(f"{catalog_name}.{schema_name}.train_set")
 test_set = spark.table(f"{catalog_name}.{schema_name}.test_set")
 
@@ -76,12 +78,14 @@ X_test = test_set[num_features + cat_features].toPandas()
 y_test = test_set[[target]].toPandas()
 
 # COMMAND ----------
+
 wrapped_model = HousePriceModelWrapper(model)  # we pass the loaded model to the wrapper
 example_input = X_test.iloc[0:1]  # Select the first row for prediction as example
 example_prediction = wrapped_model.predict(context=None, model_input=example_input)
 print("Example Prediction:", example_prediction)
 
 # COMMAND ----------
+
 # this is a trick with custom packages
 # https://docs.databricks.com/en/machine-learning/model-serving/private-libraries-model-serving.html
 # but does not work with pyspark, so we have a better option :-)
@@ -97,33 +101,37 @@ with mlflow.start_run(tags={"branch": "develop2", "git_sha": f"{git_sha}"}) as r
     conda_env = _mlflow_conda_env(
         additional_conda_deps=None,
         additional_pip_deps=[
-            "code/housing_price-0.0.1-py3-none-any.whl",
+            "code/mlops_with_databricks-0.0.1-py3-none-any.whl",
         ],
         additional_conda_channels=None,
     )
     mlflow.pyfunc.log_model(
         python_model=wrapped_model,
         artifact_path="pyfunc-house-price-model",
-        code_paths=["../housing_price-0.0.1-py3-none-any.whl"],
+        code_paths=["../mlops_with_databricks-0.0.1-py3-none-any.whl"],
         signature=signature,
     )
 
 # COMMAND ----------
+
 loaded_model = mlflow.pyfunc.load_model(f"runs:/{run_id}/pyfunc-house-price-model")
 loaded_model.unwrap_python_model()
 
 # COMMAND ----------
+
 model_name = f"{catalog_name}.{schema_name}.house_prices_model_pyfunc"
 
 model_version = mlflow.register_model(
     model_uri=f"runs:/{run_id}/pyfunc-house-price-model", name=model_name, tags={"git_sha": f"{git_sha}"}
 )
+
 # COMMAND ----------
 
 with open("model_version.json", "w") as json_file:
     json.dump(model_version.__dict__, json_file, indent=4)
 
 # COMMAND ----------
+
 model_version_alias = "the_best_model"
 client.set_registered_model_alias(model_name, model_version_alias, "1")
 
@@ -131,5 +139,5 @@ model_uri = f"models:/{model_name}@{model_version_alias}"
 model = mlflow.pyfunc.load_model(model_uri)
 
 # COMMAND ----------
+
 client.get_model_version_by_alias(model_name, model_version_alias)
-# COMMAND ----------
