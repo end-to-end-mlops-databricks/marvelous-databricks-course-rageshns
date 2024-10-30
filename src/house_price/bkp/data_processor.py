@@ -5,13 +5,12 @@ from datetime import datetime
 import pandas as pd
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import current_timestamp, to_utc_timestamp
-from sklearn.model_selection import train_test_split
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler, OneHotEncoder
-from sklearn.impute import SimpleImputer
 from sklearn.compose import ColumnTransformer
+from sklearn.impute import SimpleImputer
+from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline
-from pyspark.sql import SparkSession
+from sklearn.preprocessing import OneHotEncoder, StandardScaler
+
 from house_price.config import ProjectConfig
 from house_price.utils import remove_outliers
 
@@ -32,8 +31,6 @@ class DataProcessor:
         target = self.config.target
         self.df = self.df.dropna(subset=[target])
 
-
-
         # Convert numerical features to numeric type
         num_features = self.config.num_features
         for col in num_features:
@@ -53,31 +50,30 @@ class DataProcessor:
         for cat_col in cat_features:
             self.df[cat_col] = self.df[cat_col].astype("category")
 
-
         # Separate features and target variable based on configuration
         self.X = self.df[self.config.num_features + self.config.cat_features]
         self.y = self.df[target]
 
         # Create preprocessing steps for numeric data
-        numeric_transformer = Pipeline(steps=[
-            ('imputer', SimpleImputer(strategy='median')),
-            ('scaler', StandardScaler())
-        ])
+        numeric_transformer = Pipeline(
+            steps=[("imputer", SimpleImputer(strategy="median")), ("scaler", StandardScaler())]
+        )
 
         # Create preprocessing steps for categorical data
-        categorical_transformer = Pipeline(steps=[
-            ('imputer', SimpleImputer(strategy='constant', fill_value='missing')),
-            ('onehot', OneHotEncoder(handle_unknown='ignore'))
-        ])
+        categorical_transformer = Pipeline(
+            steps=[
+                ("imputer", SimpleImputer(strategy="constant", fill_value="missing")),
+                ("onehot", OneHotEncoder(handle_unknown="ignore")),
+            ]
+        )
 
         # Combine numeric and categorical preprocessing steps into a single transformer
         self.preprocessor = ColumnTransformer(
             transformers=[
-                ('num', numeric_transformer, self.config.num_features),
-                ('cat', categorical_transformer, self.config.cat_features)
+                ("num", numeric_transformer, self.config.num_features),
+                ("cat", categorical_transformer, self.config.cat_features),
             ]
         )
-
 
         # Remove duplicate entries
         # self.df.drop_duplicates(inplace=True)

@@ -16,6 +16,11 @@ class DataProcessor:
 
     def preprocess(self):
         """Preprocess the DataFrame stored in self.df"""
+
+        # Remove rows with missing values in the target column
+        target = self.config.target
+        self.df = self.df.dropna(subset=[target])
+
         # Handle missing values and convert data types as needed
         self.df["LotFrontage"] = pd.to_numeric(self.df["LotFrontage"], errors="coerce")
 
