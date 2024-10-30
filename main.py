@@ -3,7 +3,7 @@ import logging
 import yaml
 from databricks.connect import DatabricksSession
 
-from house_price.data_processor import DataProcessor
+from house_price.data_processor_local import DataProcessor_local
 from house_price.price_model import PriceModel
 from house_price.utils import plot_feature_importance, visualize_results
 
@@ -27,7 +27,7 @@ df = spark.read.csv(data_path, header=True, inferSchema=True).toPandas()
 
 
 # Initialize DataProcessor
-data_processor = DataProcessor(pandas_df=df, config=config)
+data_processor = DataProcessor_local(pandas_df=df, config=config)
 logger.info("DataProcessor initialized.")
 
 # Preprocess the data
