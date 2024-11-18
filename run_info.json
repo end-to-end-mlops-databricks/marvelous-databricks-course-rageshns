@@ -1,13 +1,13 @@
 {
     "info": {
-        "artifact_uri": "dbfs:/databricks/mlflow-tracking/2731380862443175/884a26bd935d41ad938375419be6e6ce/artifacts",
-        "end_time": 1730210842068,
+        "artifact_uri": "dbfs:/databricks/mlflow-tracking/2731380862443175/c1985dea19f24a39a4d59cf159ad8fc9/artifacts",
+        "end_time": 1731658515961,
         "experiment_id": "2731380862443175",
         "lifecycle_stage": "active",
-        "run_id": "884a26bd935d41ad938375419be6e6ce",
+        "run_id": "c1985dea19f24a39a4d59cf159ad8fc9",
         "run_name": "demo-run",
-        "run_uuid": "884a26bd935d41ad938375419be6e6ce",
-        "start_time": 1730210836222,
+        "run_uuid": "c1985dea19f24a39a4d59cf159ad8fc9",
+        "start_time": 1731658511041,
         "status": "FINISHED",
         "user_id": ""
     },
@@ -25,10 +25,11 @@
             "mlflow.databricks.cluster.id": "1019-154602-5rcc6z0c",
             "mlflow.databricks.cluster.info": "{\"cluster_name\":\"Ragesh NS's Cluster\",\"spark_version\":\"15.4.x-scala2.12\",\"node_type_id\":\"i3.xlarge\",\"driver_node_type_id\":\"i3.xlarge\",\"autotermination_minutes\":120,\"disk_spec\":{\"disk_count\":0},\"num_workers\":0}",
             "mlflow.databricks.cluster.libraries": "{\"installable\":[],\"redacted\":[]}",
+            "mlflow.databricks.notebook.commandID": "1731656306012_7876050395125696156_0940a865791643ec8290b6abef3d80fe",
             "mlflow.note.content": "demo run",
-            "mlflow.runColor": "#5bc5db",
+            "mlflow.runColor": "#a46750",
             "mlflow.runName": "demo-run",
-            "mlflow.source.name": "c:\\Databricks_MLOPS_EOD\\marvelous-databricks-course-rageshns\\notebooks\\week2\\02.mlflow_experiment.py",
+            "mlflow.source.name": "c:\\Databricks_MLOPS_EOD\\marvelous-databricks-course-rageshns\\.venv\\Lib\\site-packages\\ipykernel_launcher.py",
             "mlflow.source.type": "LOCAL",
             "mlflow.user": "rageshns@gmail.com"
         }

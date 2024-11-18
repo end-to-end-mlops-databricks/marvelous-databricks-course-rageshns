@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Databricks_MLOPS_EOD/marvelous-databricks-course-rageshns/mlruns/277593365521540142/d1c6dd1901444379a188b82fdd847955/artifacts
+end_time: 1731915994426
+entry_point_name: ''
+experiment_id: '277593365521540142'
+lifecycle_stage: active
+run_id: d1c6dd1901444379a188b82fdd847955
+run_name: calm-carp-833
+run_uuid: d1c6dd1901444379a188b82fdd847955
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731915989435
+status: 4
+tags: []
+user_id: ragesh

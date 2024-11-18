@@ -1,7 +1,6 @@
-# import datetime
-import logging
-
+from venv import logger
 import pandas as pd
+from pandas import read_csv
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import current_timestamp, to_utc_timestamp
 from sklearn.compose import ColumnTransformer
@@ -10,19 +9,19 @@ from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
-from house_price.config import ProjectConfig
 
-logger = logging.getLogger(__name__)
+class DataProcessor_test:
+    def __init__(self, file_path: str, config):
+        self.df = self.load_data(file_path)
+        self.config = config
+        self.X = None
+        self.y = None
+        self.preprocessor = None
 
+    def load_data(self, path):
+        return read_csv(path)
 
-class DataProcessor_local:
-    def __init__(self, pandas_df: pd.DataFrame, config: ProjectConfig):
-        self.df = pandas_df  # Store the DataFrame as self.df
-        self.config = config  # Store the configuration
-
-    def preprocess_local(self):
-        """Preprocess the DataFrame stored in self.df"""
-
+    def preprocess_data(self):
         # Checking for missing values
         # missing_values = self.df.isnull().sum()
         # print("Missing values in each column:\n", missing_values)
@@ -143,39 +142,33 @@ class DataProcessor_local:
 
         return self.df
 
-    def split_data(self, test_size=0.2, random_state=42):
-        """Split the DataFrame (self.df) into training and test sets."""
-        train_set, test_set = train_test_split(self.df, test_size=test_size, random_state=random_state)
-        return train_set, test_set
+
+    def split_data(self, test_size=None, random_state=None):
+        if test_size is None:
+            test_size = self.config["test_size"]
+
+        if random_state is None:
+            random_state = self.config["seed"]
+
+        return train_test_split(self.X_df_transformed, self.y, test_size=test_size, random_state=random_state)
+
+    def pandas_df_to_delta(self, df, name, spark):
+        self._pandas_to_spark_to_delta_cdf(df, name, spark)
+
+    def save_raw_data_to_catalog(self, spark: SparkSession):
+        self._pandas_to_spark_to_delta_cdf(self.df, "raw_data", spark)
+
+    def _pandas_to_spark_to_delta_cdf(self, pandas_df: pd.DataFrame, tbl_name: str, spark: SparkSession):
+        spark_df = spark.createDataFrame(pandas_df).withColumn(
+            "update_timestamp_utc", to_utc_timestamp(current_timestamp(), "UTC")
+        )
+
+        delta_table_path = f"{self.config['catalog_name']}.{self.config['schema_name']}.{tbl_name}"
+
+        spark_df.write.mode("overwrite").saveAsTable(delta_table_path)
+
+        spark.sql(f"ALTER TABLE {delta_table_path} " "SET TBLPROPERTIES (delta.enableChangeDataFeed = true);")
 
     def split_data_x_y(self, test_size=0.2, random_state=42):
         return train_test_split(self.X, self.y, test_size=test_size, random_state=random_state)
-
-    def save_to_catalog(self, train_set: pd.DataFrame, test_set: pd.DataFrame, spark: SparkSession):
-        """Save the train and test sets into Databricks tables."""
-
-        train_set_with_timestamp = spark.createDataFrame(train_set).withColumn(
-            "update_timestamp_utc", to_utc_timestamp(current_timestamp(), "UTC")
-        )
-
-        test_set_with_timestamp = spark.createDataFrame(test_set).withColumn(
-            "update_timestamp_utc", to_utc_timestamp(current_timestamp(), "UTC")
-        )
-
-        train_set_with_timestamp.write.mode("append").saveAsTable(
-            f"{self.config['catalog_name']}.{self.config['schema_name']}.train_set"
-        )
-
-        test_set_with_timestamp.write.mode("append").saveAsTable(
-            f"{self.config['catalog_name']}.{self.config['schema_name']}.test_set"
-        )
-
-        spark.sql(
-            f"ALTER TABLE {self.config['catalog_name']}.{self.config['schema_name']}.train_set "
-            "SET TBLPROPERTIES (delta.enableChangeDataFeed = true);"
-        )
-
-        spark.sql(
-            f"ALTER TABLE {self.config['catalog_name']}.{self.config['schema_name']}.test_set "
-            "SET TBLPROPERTIES (delta.enableChangeDataFeed = true);"
-        )
+            

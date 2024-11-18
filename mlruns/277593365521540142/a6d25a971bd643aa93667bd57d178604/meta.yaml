@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Databricks_MLOPS_EOD/marvelous-databricks-course-rageshns/mlruns/277593365521540142/a6d25a971bd643aa93667bd57d178604/artifacts
+end_time: 1731911888019
+entry_point_name: ''
+experiment_id: '277593365521540142'
+lifecycle_stage: active
+run_id: a6d25a971bd643aa93667bd57d178604
+run_name: adaptable-eel-762
+run_uuid: a6d25a971bd643aa93667bd57d178604
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731911867631
+status: 4
+tags: []
+user_id: ragesh

@@ -9,6 +9,13 @@ parameters:
   lower_bound: 0.05    # Lower quantile bound for outlier detection
   upper_bound: 0.95    # Upper quantile bound for outlier detection
 
+ab_test:
+  learning_rate_a: 0.02
+  learning_rate_b: 0.02
+  n_estimators: 1000
+  max_depth_a: 6
+  max_depth_b: 10
+
 
 num_features:
   - LotArea
@@ -43,3 +50,7 @@ cat_features:
   - SaleCondition
 
 target: SalePrice
+
+#_test
+seed: 42
+test_size: 0.2

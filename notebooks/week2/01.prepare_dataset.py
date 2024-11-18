@@ -11,6 +11,10 @@ from pyspark.sql import SparkSession
 
 from house_price.config import ProjectConfig
 from house_price.data_processor import DataProcessor
+from logging_config import setup_logging
+
+setup_logging()
+
 
 spark = SparkSession.builder.getOrCreate()
 

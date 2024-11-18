@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Databricks_MLOPS_EOD/marvelous-databricks-course-rageshns/mlruns/277593365521540142/07879257f37444eda85107bdafd01266/artifacts
+end_time: 1731776322707
+entry_point_name: ''
+experiment_id: '277593365521540142'
+lifecycle_stage: active
+run_id: 07879257f37444eda85107bdafd01266
+run_name: magnificent-seal-603
+run_uuid: 07879257f37444eda85107bdafd01266
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731776322275
+status: 4
+tags: []
+user_id: ragesh

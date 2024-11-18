@@ -1,0 +1,27 @@
+digest: d4fe5472
+name: dataset
+profile: '{"num_rows": 1168, "num_elements": 33872}'
+schema: '{"mlflow_colspec": [{"type": "long", "name": "LotArea", "required": true},
+  {"type": "long", "name": "OverallQual", "required": true}, {"type": "long", "name":
+  "OverallCond", "required": true}, {"type": "long", "name": "YearBuilt", "required":
+  true}, {"type": "long", "name": "YearRemodAdd", "required": true}, {"type": "double",
+  "name": "MasVnrArea", "required": false}, {"type": "double", "name": "TotalBsmtSF",
+  "required": true}, {"type": "long", "name": "GrLivArea", "required": true}, {"type":
+  "double", "name": "GarageCars", "required": true}, {"type": "double", "name": "GarageArea",
+  "required": true}, {"type": "string", "name": "MSZoning", "required": true}, {"type":
+  "string", "name": "Street", "required": true}, {"type": "string", "name": "Alley",
+  "required": false}, {"type": "string", "name": "LotShape", "required": true}, {"type":
+  "string", "name": "LandContour", "required": true}, {"type": "string", "name": "Neighborhood",
+  "required": true}, {"type": "string", "name": "Condition1", "required": true}, {"type":
+  "string", "name": "BldgType", "required": true}, {"type": "string", "name": "HouseStyle",
+  "required": true}, {"type": "string", "name": "RoofStyle", "required": true}, {"type":
+  "string", "name": "Exterior1st", "required": true}, {"type": "string", "name": "Exterior2nd",
+  "required": true}, {"type": "string", "name": "MasVnrType", "required": false},
+  {"type": "string", "name": "Foundation", "required": true}, {"type": "string", "name":
+  "Heating", "required": true}, {"type": "string", "name": "CentralAir", "required":
+  true}, {"type": "string", "name": "SaleType", "required": true}, {"type": "string",
+  "name": "SaleCondition", "required": true}, {"type": "double", "name": "target",
+  "required": true}]}'
+source: '{"tags": {"mlflow.user": "ragesh", "mlflow.source.name": "c:\\Databricks_MLOPS_EOD\\marvelous-databricks-course-rageshns\\main_test.py",
+  "mlflow.source.type": "LOCAL", "mlflow.databricks.cluster.id": "1019-154602-5rcc6z0c"}}'
+source_type: code

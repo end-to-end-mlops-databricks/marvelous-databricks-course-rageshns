@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Databricks_MLOPS_EOD/marvelous-databricks-course-rageshns/mlruns/277593365521540142/17216f6846cd4b0c80e0bbf693c0e413/artifacts
+end_time: 1731913017776
+entry_point_name: ''
+experiment_id: '277593365521540142'
+lifecycle_stage: active
+run_id: 17216f6846cd4b0c80e0bbf693c0e413
+run_name: caring-dove-777
+run_uuid: 17216f6846cd4b0c80e0bbf693c0e413
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731912801715
+status: 4
+tags: []
+user_id: ragesh

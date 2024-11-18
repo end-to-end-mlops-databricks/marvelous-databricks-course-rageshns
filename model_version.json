@@ -1,0 +1,18 @@
+{
+    "_name": "mlops_students.rageshns.house_prices_model_pyfunc",
+    "_version": "1",
+    "_creation_time": 1730134039412,
+    "_last_updated_timestamp": 1730134040751,
+    "_description": "",
+    "_user_id": "rageshns@gmail.com",
+    "_current_stage": null,
+    "_source": "dbfs:/databricks/mlflow-tracking/933558699199674/55d0c7645fc24924966f1212c770b15d/artifacts/pyfunc-house-price-model",
+    "_run_id": "55d0c7645fc24924966f1212c770b15d",
+    "_run_link": null,
+    "_status": "READY",
+    "_status_message": "",
+    "_tags": {
+        "git_sha": "ffa63b430205ff7"
+    },
+    "_aliases": []
+}

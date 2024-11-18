@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Databricks_MLOPS_EOD/marvelous-databricks-course-rageshns/mlruns/277593365521540142/d4944e7ad6484e84ba0892d511e7c209/artifacts
+end_time: 1731779657178
+entry_point_name: ''
+experiment_id: '277593365521540142'
+lifecycle_stage: active
+run_id: d4944e7ad6484e84ba0892d511e7c209
+run_name: luxuriant-goat-93
+run_uuid: d4944e7ad6484e84ba0892d511e7c209
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1731779639902
+status: 4
+tags: []
+user_id: ragesh
