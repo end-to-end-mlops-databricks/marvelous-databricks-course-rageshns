@@ -44,6 +44,9 @@ uv build
 ```
 ```
 databricks fs cp dist/mlops_with_databricks-0.0.1-py3-none-any.whl  dbfs:/Volumes/mlops_students/rageshns/data/ --profile mlops_training
+
+databricks fs cp project_config.yml dbfs:/Volumes/mlops_students/rageshns/data/ --profile mlops_training
+
 ```
 ```
  uv pip install -e .

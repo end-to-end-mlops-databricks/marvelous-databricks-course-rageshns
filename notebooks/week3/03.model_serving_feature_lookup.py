@@ -52,7 +52,7 @@ online_table_pipeline = workspace.online_tables.create(name=online_table_name, s
 # COMMAND ----------
 
 
-config = ProjectConfig.from_yaml(config_path="/Volumes/mlops_dev/house_prices/data/project_config.yml")
+config = ProjectConfig.from_yaml(config_path="/Volumes/mlops_students/rageshns/data/project_config.yml")
 
 catalog_name = config.catalog_name
 schema_name = config.schema_name
