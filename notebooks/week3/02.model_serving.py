@@ -37,14 +37,14 @@ workspace.serving_endpoints.create(
     config=EndpointCoreConfigInput(
         served_entities=[
             ServedEntityInput(
-                entity_name=f"{catalog_name}.{schema_name}.house_prices_model",
+                entity_name=f"{catalog_name}.{schema_name}.house_prices_model_pyfunc",
                 scale_to_zero_enabled=True,
                 workload_size="Small",
                 entity_version=2,
             )
         ],
         # Optional if only 1 entity is served
-        traffic_config=TrafficConfig(routes=[Route(served_model_name="house_prices_model-2", traffic_percentage=100)]),
+        traffic_config=TrafficConfig(routes=[Route(served_model_name="house_prices_model_pyfunc-2", traffic_percentage=100)]),
     ),
 )
 
