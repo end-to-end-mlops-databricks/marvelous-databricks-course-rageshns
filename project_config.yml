@@ -18,6 +18,7 @@ ab_test:
 
 
 num_features:
+  - LotFrontage 
   - LotArea
   - OverallQual
   - OverallCond
@@ -27,7 +28,6 @@ num_features:
   - TotalBsmtSF
   - GrLivArea
   - GarageCars
-  - GarageArea
 
 cat_features:
   - MSZoning
