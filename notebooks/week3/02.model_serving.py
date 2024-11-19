@@ -44,7 +44,7 @@ workspace.serving_endpoints.create(
             )
         ],
         # Optional if only 1 entity is served
-        traffic_config=TrafficConfig(routes=[Route(served_model_name="house_prices_model_pyfunc-2", traffic_percentage=100)]),
+        traffic_config=TrafficConfig(routes=[Route(served_model_name="house_prices_model_pyfunc-4", traffic_percentage=100)]),
     ),
 )
 
