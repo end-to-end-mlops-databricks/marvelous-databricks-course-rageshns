@@ -79,7 +79,7 @@ lint.select = [
 #     "",
 #]
 
-lint.ignore=["E501", "F821", "E402"]
+lint.ignore=["E501", "F821", "E402", "B018"]
 
 
 [tool.ruff.format]

@@ -1,16 +1,15 @@
 import logging
+
+import mlflow
 import pandas as pd
 import yaml
 from databricks.connect import DatabricksSession
-import mlflow
 from mlflow.models import infer_signature
-from house_price.data_processor_test import DataProcessor_test
-from house_price.price_model_test import HousePriceModelWrapper
-from house_price.utils import plot_feature_importance, visualize_results
 from mlflow.utils.environment import _mlflow_conda_env
-from pyspark.sql import SparkSession
 
 from house_price.data_processor import ProjectConfig
+from house_price.data_processor_test import DataProcessor_test
+from house_price.price_model_test import HousePriceModelWrapper
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 logger = logging.getLogger(__name__)
@@ -50,7 +49,7 @@ run_id = mlflow.search_runs(
 model = mlflow.sklearn.load_model(f"runs:/{run_id}/lightgbm-pipeline-model")
 
 # Initialize DataProcessor
-data_processor = DataProcessor_test('data/data.csv', config)
+data_processor = DataProcessor_test("data/data.csv", config)
 logger.info("DataProcessor initialized.")
 
 # Preprocess the data

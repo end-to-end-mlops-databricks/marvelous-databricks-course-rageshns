@@ -1,29 +1,15 @@
-from sklearn.ensemble import RandomForestRegressor
-from sklearn.metrics import mean_squared_error, r2_score
-from sklearn.pipeline import Pipeline
 import mlflow
 import pandas as pd
-from house_price.utils import adjust_predictions
-
-import json
-
-
-import pandas as pd
 from mlflow import MlflowClient
-from mlflow.models import infer_signature
-from mlflow.utils.environment import _mlflow_conda_env
-from pyspark.sql import SparkSession
+from sklearn.metrics import mean_squared_error, r2_score
 
-from house_price.data_processor import ProjectConfig
-
+from house_price.utils import adjust_predictions
 
 mlflow.set_registry_uri("databricks-uc")
 mlflow.set_tracking_uri("databricks")
 client = MlflowClient()
 
 
-
-        
 class HousePriceModelWrapper(mlflow.pyfunc.PythonModel):
     def __init__(self, model):
         self.model = model
@@ -38,7 +24,6 @@ class HousePriceModelWrapper(mlflow.pyfunc.PythonModel):
 
     def train(self, X_train, y_train):
         self.model.fit(X_train, y_train)
-
 
     def evaluate(self, X_test, y_test):
         y_pred = self.predict(X_test)

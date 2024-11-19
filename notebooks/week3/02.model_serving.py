@@ -6,22 +6,21 @@
 
 # COMMAND ----------
 
-import time
-
-import requests
 import random
+import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
+import requests
 from databricks.sdk import WorkspaceClient
 from databricks.sdk.service.serving import (
     EndpointCoreConfigInput,
+    Route,
     ServedEntityInput,
     TrafficConfig,
-    Route,
 )
+from pyspark.sql import SparkSession
 
 from house_price.config import ProjectConfig
-from pyspark.sql import SparkSession
 
 workspace = WorkspaceClient()
 spark = SparkSession.builder.getOrCreate()
@@ -44,13 +43,8 @@ workspace.serving_endpoints.create(
                 entity_version=2,
             )
         ],
-    # Optional if only 1 entity is served
-    traffic_config=TrafficConfig(
-        routes=[
-            Route(served_model_name="house_prices_model-2",
-                  traffic_percentage=100)
-        ]
-        ),
+        # Optional if only 1 entity is served
+        traffic_config=TrafficConfig(routes=[Route(served_model_name="house_prices_model-2", traffic_percentage=100)]),
     ),
 )
 
@@ -128,9 +122,7 @@ Each body should be list of json with columns
 # COMMAND ----------
 start_time = time.time()
 
-model_serving_endpoint = (
-    f"https://{host}/serving-endpoints/house-prices-model-serving/invocations"
-)
+model_serving_endpoint = f"https://{host}/serving-endpoints/house-prices-model-serving/invocations"
 response = requests.post(
     f"{model_serving_endpoint}",
     headers={"Authorization": f"Bearer {token}"},
@@ -152,9 +144,7 @@ print("Execution time:", execution_time, "seconds")
 # COMMAND ----------
 
 # Initialize variables
-model_serving_endpoint = (
-    f"https://{host}/serving-endpoints/house-prices-model-serving/invocations"
-)
+model_serving_endpoint = f"https://{host}/serving-endpoints/house-prices-model-serving/invocations"
 
 headers = {"Authorization": f"Bearer {token}"}
 num_requests = 1000
@@ -193,4 +183,3 @@ average_latency = sum(latencies) / len(latencies)
 
 print("\nTotal execution time:", total_execution_time, "seconds")
 print("Average latency per request:", average_latency, "seconds")
-

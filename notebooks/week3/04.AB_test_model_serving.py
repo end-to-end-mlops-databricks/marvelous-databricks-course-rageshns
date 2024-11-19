@@ -5,10 +5,12 @@
 # MAGIC %restart_python
 
 # COMMAND ----------
+import hashlib
 import time
 
 import mlflow
 import pandas as pd
+import requests
 from databricks.sdk import WorkspaceClient
 from databricks.sdk.service.serving import EndpointCoreConfigInput, ServedEntityInput
 from lightgbm import LGBMRegressor
@@ -19,8 +21,6 @@ from sklearn.compose import ColumnTransformer
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder
-import hashlib
-import requests
 
 from house_price.config import ProjectConfig
 
@@ -122,9 +122,7 @@ with mlflow.start_run(tags={"model_class": "A", "git_sha": git_sha}) as run:
     signature = infer_signature(model_input=X_train, model_output=y_pred)
 
     # Log the input dataset for tracking reproducibility
-    dataset = mlflow.data.from_spark(train_set_spark,
-                                     table_name=f"{catalog_name}.{schema_name}.train_set",
-                                     version="0")
+    dataset = mlflow.data.from_spark(train_set_spark, table_name=f"{catalog_name}.{schema_name}.train_set", version="0")
     mlflow.log_input(dataset, context="training")
 
     # Log the pipeline model in MLflow with a unique artifact path
@@ -176,8 +174,7 @@ with mlflow.start_run(tags={"model_class": "B", "git_sha": git_sha}) as run:
     mlflow.log_metric("r2_score", r2)
     signature = infer_signature(model_input=X_train, model_output=y_pred)
 
-    dataset = mlflow.data.from_spark(train_set_spark,
-                                     table_name=f"{catalog_name}.{schema_name}.train_set", version="0")
+    dataset = mlflow.data.from_spark(train_set_spark, table_name=f"{catalog_name}.{schema_name}.train_set", version="0")
     mlflow.log_input(dataset, context="training")
     mlflow.sklearn.log_model(sk_model=pipeline, artifact_path="lightgbm-pipeline-model", signature=signature)
 
@@ -237,9 +234,7 @@ X_test = test_set[num_features + cat_features + ["Id"]]
 models = [model_A, model_B]
 wrapped_model = HousePriceModelWrapper(models)  # we pass the loaded models to the wrapper
 example_input = X_test.iloc[0:1]  # Select the first row for prediction as example
-example_prediction = wrapped_model.predict(
-    context=None,
-    model_input=example_input)
+example_prediction = wrapped_model.predict(context=None, model_input=example_input)
 print("Example Prediction:", example_prediction)
 
 # COMMAND ----------
@@ -248,22 +243,14 @@ model_name = f"{catalog_name}.{schema_name}.house_prices_model_pyfunc_ab_test"
 
 with mlflow.start_run() as run:
     run_id = run.info.run_id
-    signature = infer_signature(model_input=X_train,
-                                model_output={"Prediction": 1234.5,
-                                              "model": "Model B"})
-    dataset = mlflow.data.from_spark(train_set_spark,
-                                     table_name=f"{catalog_name}.{schema_name}.train_set",
-                                     version="0")
+    signature = infer_signature(model_input=X_train, model_output={"Prediction": 1234.5, "model": "Model B"})
+    dataset = mlflow.data.from_spark(train_set_spark, table_name=f"{catalog_name}.{schema_name}.train_set", version="0")
     mlflow.log_input(dataset, context="training")
     mlflow.pyfunc.log_model(
-        python_model=wrapped_model,
-        artifact_path="pyfunc-house-price-model-ab",
-        signature=signature
+        python_model=wrapped_model, artifact_path="pyfunc-house-price-model-ab", signature=signature
     )
 model_version = mlflow.register_model(
-    model_uri=f"runs:/{run_id}/pyfunc-house-price-model-ab",
-    name=model_name,
-    tags={"git_sha": f"{git_sha}"}
+    model_uri=f"runs:/{run_id}/pyfunc-house-price-model-ab", name=model_name, tags={"git_sha": f"{git_sha}"}
 )
 
 # COMMAND ----------
@@ -350,9 +337,7 @@ dataframe_records = [[record] for record in sampled_records]
 
 start_time = time.time()
 
-model_serving_endpoint = (
-    f"https://{host}/serving-endpoints/house-prices-model-serving-ab-test/invocations"
-)
+model_serving_endpoint = f"https://{host}/serving-endpoints/house-prices-model-serving-ab-test/invocations"
 
 response = requests.post(
     f"{model_serving_endpoint}",

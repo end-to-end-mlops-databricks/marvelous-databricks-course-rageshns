@@ -1,4 +1,5 @@
 from venv import logger
+
 import pandas as pd
 from pandas import read_csv
 from pyspark.sql import SparkSession
@@ -144,7 +145,6 @@ class DataProcessor_test:
 
         return self.df
 
-
     def split_data(self, test_size=None, random_state=None):
         if test_size is None:
             test_size = self.config["test_size"]
@@ -173,4 +173,3 @@ class DataProcessor_test:
 
     def split_data_x_y(self, test_size=0.2, random_state=42):
         return train_test_split(self.X, self.y, test_size=test_size, random_state=random_state)
-            
