@@ -81,7 +81,7 @@ df = pd.concat([train_set, test_set])
 # COMMAND ----------
 
 # Load the MLflow model for predictions
-pipeline = mlflow.sklearn.load_model(f"models:/{catalog_name}.{schema_name}.house_prices_model/2")
+pipeline = mlflow.sklearn.load_model(f"models:/{catalog_name}.{schema_name}.house_prices_model_basic/4")
 
 # COMMAND ----------
 
@@ -199,6 +199,8 @@ response = requests.post(
     headers={"Authorization": f"Bearer {token}"},
     json={"dataframe_split": {"columns": ["Id"], "data": [["182"]]}},
 )
+
+# COMMAND ----------
 
 # MAGIC %md
 # MAGIC ## Load Test
