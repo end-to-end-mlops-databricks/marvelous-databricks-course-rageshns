@@ -25,6 +25,8 @@ class DataProcessor_test:
         # Checking for missing values
         # missing_values = self.df.isnull().sum()
         # print("Missing values in each column:\n", missing_values)
+        # change column names to lowercase and replace spaces with underscores
+        # self.df.columns = self.df.columns.str.lower().str.replace(" ", "_")
 
         # Remove rows with missing values in the target column
         target = self.config["target"]
