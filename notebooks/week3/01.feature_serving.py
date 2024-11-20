@@ -131,7 +131,8 @@ features = [
 feature_spec_name = f"{catalog_name}.{schema_name}.return_predictions"
 
 fe.create_feature_spec(name=feature_spec_name, features=features, exclude_columns=None)
-
+#  To delete featurespec
+# fe.delete_feature_spec(name=feature_spec_name)
 # COMMAND ----------
 
 # MAGIC %md

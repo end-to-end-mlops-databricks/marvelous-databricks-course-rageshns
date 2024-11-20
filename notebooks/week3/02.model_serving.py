@@ -40,12 +40,12 @@ workspace.serving_endpoints.create(
                 entity_name=f"{catalog_name}.{schema_name}.house_prices_model_pyfunc",
                 scale_to_zero_enabled=True,
                 workload_size="Small",
-                entity_version=4,
+                entity_version=1,
             )
         ],
         # Optional if only 1 entity is served
         traffic_config=TrafficConfig(
-            routes=[Route(served_model_name="house_prices_model_pyfunc-4", traffic_percentage=100)]
+            routes=[Route(served_model_name="house_prices_model_pyfunc-1", traffic_percentage=100)]
         ),
     ),
 )
