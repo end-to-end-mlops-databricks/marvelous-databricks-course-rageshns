@@ -81,7 +81,7 @@ df = pd.concat([train_set, test_set])
 # COMMAND ----------
 
 # Load the MLflow model for predictions
-pipeline = mlflow.sklearn.load_model(f"models:/{catalog_name}.{schema_name}.house_prices_model_basic/4")
+pipeline = mlflow.sklearn.load_model(f"models:/{catalog_name}.{schema_name}.house_prices_model_basic/1")
 
 # COMMAND ----------
 
