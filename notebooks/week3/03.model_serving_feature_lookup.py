@@ -2,6 +2,7 @@
 # MAGIC %pip install ../mlops_with_databricks-0.0.1-py3-none-any.whl
 
 # COMMAND ----------
+
 # MAGIC %restart_python
 
 # COMMAND ----------
@@ -46,7 +47,7 @@ spec = OnlineTableSpec(
     run_triggered=OnlineTableSpecTriggeredSchedulingPolicy.from_dict({"triggered": "true"}),
     perform_full_copy=False,
 )
-
+# online_table_pipeline = workspace.online_tables.delete(name=online_table_name)
 online_table_pipeline = workspace.online_tables.create(name=online_table_name, spec=spec)
 
 # COMMAND ----------
@@ -65,7 +66,7 @@ schema_name = config.schema_name
 # COMMAND ----------
 
 workspace.serving_endpoints.create(
-    name="house-prices-model-serving-fe",
+    name="house-prices-model-serving-fe1",
     config=EndpointCoreConfigInput(
         served_entities=[
             ServedEntityInput(
@@ -116,6 +117,7 @@ required_columns = [
     "Heating",
     "CentralAir",
     "SaleType",
+    "GarageArea",
     "SaleCondition",
     "Id",
 ]
@@ -134,9 +136,10 @@ train_set.dtypes
 dataframe_records[0]
 
 # COMMAND ----------
+
 start_time = time.time()
 
-model_serving_endpoint = f"https://{host}/serving-endpoints/house-prices-model-serving-fe/invocations"
+model_serving_endpoint = f"https://{host}/serving-endpoints/house-prices-model-serving-fe1/invocations"
 
 response = requests.post(
     f"{model_serving_endpoint}",
