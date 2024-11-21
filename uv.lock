@@ -1094,7 +1094,6 @@ dependencies = [
 [package.optional-dependencies]
 dev = [
     { name = "databricks-connect" },
-    { name = "databricks-sdk" },
     { name = "ipykernel" },
     { name = "pip" },
 ]
@@ -1107,7 +1106,6 @@ requires-dist = [
     { name = "databricks-feature-engineering", specifier = "==0.6" },
     { name = "databricks-feature-lookup", specifier = "==1.2.0" },
     { name = "databricks-sdk", specifier = "==0.32.0" },
-    { name = "databricks-sdk", marker = "extra == 'dev'", specifier = ">=0.32.0,<0.33" },
     { name = "ipykernel", marker = "extra == 'dev'", specifier = ">=6.29.5,<7" },
     { name = "lightgbm", specifier = "===4.5.0" },
     { name = "matplotlib", specifier = "==3.9.2" },
