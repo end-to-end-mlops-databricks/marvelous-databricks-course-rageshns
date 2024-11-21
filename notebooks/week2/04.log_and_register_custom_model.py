@@ -27,7 +27,7 @@ client = MlflowClient()
 
 # COMMAND ----------
 
-config = ProjectConfig.from_yaml(config_path="project_config.yml")
+config = ProjectConfig.from_yaml(config_path="../../project_config.yml")
 
 # Extract configuration details
 num_features = config.num_features
@@ -108,7 +108,7 @@ with mlflow.start_run(tags={"branch": "develop2", "git_sha": f"{git_sha}"}) as r
         conda_env=conda_env,
         artifact_path="pyfunc-house-price-model",
         # infer_code_paths=True,
-        code_paths=["../mlops_with_databricks-0.0.1-py3-none-any.whl"],
+        code_paths=["mlops_with_databricks-0.0.1-py3-none-any.whl"],
         signature=signature,
     )
 

@@ -2,7 +2,6 @@
 # MAGIC %pip install ../mlops_with_databricks-0.0.1-py3-none-any.whl
 
 # COMMAND ----------
-
 # MAGIC %restart_python
 
 # COMMAND ----------
@@ -116,8 +115,8 @@ required_columns = [
     "Foundation",
     "Heating",
     "CentralAir",
-    "SaleType",
     "GarageArea",
+    "SaleType",
     "SaleCondition",
     "Id",
 ]
@@ -136,7 +135,6 @@ train_set.dtypes
 dataframe_records[0]
 
 # COMMAND ----------
-
 start_time = time.time()
 
 model_serving_endpoint = f"https://{host}/serving-endpoints/house-prices-model-serving-fe1/invocations"
