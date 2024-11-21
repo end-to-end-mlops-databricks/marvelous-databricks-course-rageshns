@@ -1,0 +1,57 @@
+catalog_name: mlops_students
+schema_name: rageshns
+
+parameters:
+  learning_rate: 0.01
+  n_estimators: 1000
+  max_depth: 6
+  drop_threshold: 0.8  # Threshold for dropping columns with missing values
+  lower_bound: 0.05    # Lower quantile bound for outlier detection
+  upper_bound: 0.95    # Upper quantile bound for outlier detection
+
+ab_test:
+  learning_rate_a: 0.02
+  learning_rate_b: 0.02
+  n_estimators: 1000
+  max_depth_a: 6
+  max_depth_b: 10
+
+
+num_features:
+  - LotFrontage
+  - LotArea
+  - OverallQual
+  - OverallCond
+  - YearBuilt
+  - YearRemodAdd
+  - MasVnrArea
+  - TotalBsmtSF
+  - GrLivArea
+  - GarageCars
+  - GarageArea
+
+cat_features:
+  - MSZoning
+  - Street
+  - Alley
+  - LotShape
+  - LandContour
+  - Neighborhood
+  - Condition1
+  - BldgType
+  - HouseStyle
+  - RoofStyle
+  - Exterior1st
+  - Exterior2nd
+  - MasVnrType
+  - Foundation
+  - Heating
+  - CentralAir
+  - SaleType
+  - SaleCondition
+
+target: SalePrice
+
+#_test
+seed: 42
+test_size: 0.2
