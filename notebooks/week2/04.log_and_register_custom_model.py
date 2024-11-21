@@ -106,8 +106,8 @@ with mlflow.start_run(tags={"branch": "develop2", "git_sha": f"{git_sha}"}) as r
     mlflow.pyfunc.log_model(
         python_model=wrapped_model,
         artifact_path="pyfunc-house-price-model",
-        infer_code_paths=True,
-        # code_paths=["../mlops_with_databricks-0.0.1-py3-none-any.whl"],
+        # infer_code_paths=True,
+        code_paths=["mlops_with_databricks-0.0.1-py3-none-any.whl"],
         signature=signature,
     )
 
