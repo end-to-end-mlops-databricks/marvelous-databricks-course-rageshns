@@ -100,15 +100,14 @@ with mlflow.start_run(tags={"branch": "develop2", "git_sha": f"{git_sha}"}) as r
     mlflow.log_input(dataset, context="training")
     conda_env = _mlflow_conda_env(
         additional_conda_deps=None,
-        additional_pip_deps=[
-            "code/mlops_with_databricks-0.0.1-py3-none-any.whl",
-        ],
+        additional_pip_deps=["code/mlops_with_databricks-0.0.1-py3-none-any.whl"],
         additional_conda_channels=None,
     )
     mlflow.pyfunc.log_model(
         python_model=wrapped_model,
         artifact_path="pyfunc-house-price-model",
-        code_paths=["../mlops_with_databricks-0.0.1-py3-none-any.whl"],
+        infer_code_paths=True,
+        # code_paths=["../mlops_with_databricks-0.0.1-py3-none-any.whl"],
         signature=signature,
     )
 
