@@ -1,14 +1,17 @@
+# Databricks notebook source
 import numpy as np
 import pandas as pd
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import current_timestamp, to_utc_timestamp
-
 from house_price.config import ProjectConfig
+
+# COMMAND ----------
 
 # Load configuration
 config = ProjectConfig.from_yaml(config_path="/Volumes/mlops_students/rageshns/data/project_config.yml")
 catalog_name = config.catalog_name
 schema_name = config.schema_name
+# COMMAND ----------
 
 spark = SparkSession.builder.getOrCreate()
 
@@ -17,7 +20,7 @@ train_set = spark.table(f"{catalog_name}.{schema_name}.train_set").toPandas()
 test_set = spark.table(f"{catalog_name}.{schema_name}.test_set").toPandas()
 combined_set = pd.concat([train_set, test_set], ignore_index=True)
 existing_ids = set(int(id) for id in combined_set["Id"])
-
+# COMMAND ----------
 
 # Define function to create synthetic data without random state
 def create_synthetic_data(df, num_rows=100):
@@ -62,6 +65,7 @@ def create_synthetic_data(df, num_rows=100):
 
     return synthetic_data
 
+# COMMAND ----------
 
 # Create synthetic data
 synthetic_df = create_synthetic_data(combined_set)
@@ -74,5 +78,16 @@ train_set_with_timestamp = synthetic_spark_df.withColumn(
     "update_timestamp_utc", to_utc_timestamp(current_timestamp(), "UTC")
 )
 
+# COMMAND ----------
 # Append synthetic data as new data to source_data table
 train_set_with_timestamp.write.mode("append").saveAsTable(f"{catalog_name}.{schema_name}.source_data")
+
+
+
+# COMMAND ----------
+
+synthetic_df.head()
+
+# COMMAND ----------
+
+synthetic_df.tail()
