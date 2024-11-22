@@ -28,6 +28,7 @@ combined_set = pd.concat([train_set, test_set], ignore_index=True)
 existing_ids = set(int(id) for id in combined_set["Id"])
 # COMMAND ----------
 
+
 # Define function to create synthetic data without random state
 def create_synthetic_data(df, num_rows=100):
     synthetic_data = pd.DataFrame()
@@ -71,6 +72,7 @@ def create_synthetic_data(df, num_rows=100):
 
     return synthetic_data
 
+
 # COMMAND ----------
 
 # Create synthetic data
@@ -87,7 +89,6 @@ train_set_with_timestamp = synthetic_spark_df.withColumn(
 # COMMAND ----------
 # Append synthetic data as new data to source_data table
 train_set_with_timestamp.write.mode("append").saveAsTable(f"{catalog_name}.{schema_name}.source_data")
-
 
 
 # COMMAND ----------
