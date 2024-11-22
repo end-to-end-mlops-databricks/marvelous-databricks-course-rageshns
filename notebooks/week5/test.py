@@ -12,7 +12,9 @@ from house_price.config import ProjectConfig
 
 # COMMAND ----------
 config = ProjectConfig.from_yaml(config_path="../../project_config.yml")
-
+catalog_name = config.catalog_name
+schema_name = config.schema_name
+use_case_name = config.use_case_name
 # COMMAND ----------
 spark = SparkSession.builder.getOrCreate()
 
@@ -29,7 +31,9 @@ existing_ids = full_data.select(config.primary_key).rdd.flatMap(lambda x: x).col
 synthetic_df = generate_synthetic_data(config, full_data)
 
 # COMMAND ----------
-synthetic_df.write.format("delta").mode("append").saveAsTable(f"{config.catalog_name}.{config.schema_name}.raw_{config.use_case_name}")
+synthetic_df.write.format("delta").mode("append").saveAsTable(
+    f"{config.catalog_name}.{config.schema_name}.raw_{config.use_case_name}"
+)
 
 try:
     table_path = f"{config.catalog_name}.{config.schema_name}.{config.use_case_name}"
