@@ -10,6 +10,7 @@ class ProjectConfig(BaseModel):
     target: str
     catalog_name: str
     schema_name: str
+    use_case_name: str
     parameters: Dict[str, Any]  # Dictionary to hold model-related parameters
     ab_test: Dict[str, Any]  # Dictionary to hold A/B test parameters
     pipeline_id: str  # pipeline id for data live tables

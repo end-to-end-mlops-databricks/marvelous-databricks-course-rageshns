@@ -17,7 +17,7 @@ schema_name = config.schema_name
 use_case_name = config.use_case_name
 # COMMAND ----------
 spark = SparkSession.builder.getOrCreate()
-
+table_path = f"{config.catalog_name}.{config.schema_name}.raw_{config.use_case_name}"
 try:
     table_path = f"{config.catalog_name}.{config.schema_name}.raw_{config.use_case_name}"
     full_data = spark.read.table(table_path)
