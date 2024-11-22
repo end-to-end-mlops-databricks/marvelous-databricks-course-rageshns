@@ -16,22 +16,18 @@ The evaluation process:
 6. Updates pipeline task values with results
 """
 
+import argparse
+from datetime import datetime
+
+import mlflow
 from databricks import feature_engineering
 from databricks.sdk import WorkspaceClient
+from pyspark.ml.evaluation import RegressionEvaluator
 from pyspark.sql import SparkSession
 from pyspark.sql import functions as F
 from pyspark.sql.functions import col
-from pyspark.ml.evaluation import RegressionEvaluator
-from datetime import datetime
-import mlflow
-import argparse
-from pyspark.sql import functions as F
-from pyspark.sql import DataFrame
-from pyspark.ml.evaluation import RegressionEvaluator
 
 from house_price.config import ProjectConfig
-
-
 
 parser = argparse.ArgumentParser()
 parser.add_argument(
@@ -72,7 +68,7 @@ new_model_uri = args.new_model_uri
 job_run_id = args.job_run_id
 git_sha = args.git_sha
 
-config_path = (f"{root_path}/project_config.yml")
+config_path = f"{root_path}/project_config.yml"
 # config_path = ("/Volumes/mlops_test/house_prices/data/project_config.yml")
 config = ProjectConfig.from_yaml(config_path=config_path)
 
@@ -117,9 +113,7 @@ predictions_old = predictions_previous.withColumnRenamed("prediction", "predicti
 test_set = test_set.select("Id", "SalePrice")
 
 # Join the DataFrames on the 'id' column
-df = test_set \
-    .join(predictions_new, on="Id") \
-    .join(predictions_old, on="Id")
+df = test_set.join(predictions_new, on="Id").join(predictions_old, on="Id")
 
 # Calculate the absolute error for each model
 df = df.withColumn("error_new", F.abs(df["SalePrice"] - df["prediction_new"]))
@@ -147,10 +141,10 @@ print(f"MAE for Old Model: {mae_old}")
 if mae_new < mae_old:
     print("New model is better based on MAE.")
     model_version = mlflow.register_model(
-      model_uri=new_model_uri,
-      name=f"{catalog_name}.{schema_name}.house_prices_model_fe",
-      tags={"git_sha": f"{git_sha}",
-            "job_run_id": job_run_id})
+        model_uri=new_model_uri,
+        name=f"{catalog_name}.{schema_name}.house_prices_model_fe",
+        tags={"git_sha": f"{git_sha}", "job_run_id": job_run_id},
+    )
 
     print("New model registered with version:", model_version.version)
     dbutils.jobs.taskValues.set(key="model_version", value=model_version.version)

@@ -1,5 +1,5 @@
 # Databricks notebook source
-# MAGIC %pip install mlops_with_databricks-0.0.1-py3-none-any.whl
+# MAGIC %pip install ../mlops_with_databricks-0.0.1-py3-none-any.whl
 # MAGIC
 
 # COMMAND ----------
@@ -132,7 +132,7 @@ with open("model_version.json", "w") as json_file:
 
 # COMMAND ----------
 
-model_version_alias = "the_best_model"
+model_version_alias = "latest"
 client.set_registered_model_alias(model_name, model_version_alias, "1")
 
 model_uri = f"models:/{model_name}@{model_version_alias}"

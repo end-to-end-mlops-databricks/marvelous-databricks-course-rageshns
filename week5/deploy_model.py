@@ -11,10 +11,11 @@ Key functionality:
 The endpoint is configured for feature-engineered model serving with automatic scaling.
 """
 
-import yaml
 import argparse
+
 from databricks.sdk import WorkspaceClient
 from databricks.sdk.service.serving import ServedEntityInput
+
 from house_price.config import ProjectConfig
 
 parser = argparse.ArgumentParser()
@@ -29,7 +30,7 @@ parser.add_argument(
 args = parser.parse_args()
 root_path = args.root_path
 
-config_path = (f"{root_path}/project_config.yml")
+config_path = f"{root_path}/project_config.yml"
 # config_path = ("/Volumes/mlops_test/house_prices/data/project_config.yml")
 config = ProjectConfig.from_yaml(config_path=config_path)
 

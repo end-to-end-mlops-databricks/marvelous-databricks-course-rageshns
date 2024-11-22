@@ -12,23 +12,22 @@ Key functionality:
 The model uses both numerical and categorical features, including a custom calculated house age feature.
 """
 
-from databricks import feature_engineering
-from pyspark.sql import SparkSession
-from databricks.sdk import WorkspaceClient
-import mlflow
 import argparse
-from pyspark.sql import functions as F
+from datetime import datetime
+
+import mlflow
+from databricks import feature_engineering
+from databricks.feature_engineering import FeatureFunction, FeatureLookup
+from databricks.sdk import WorkspaceClient
 from lightgbm import LGBMRegressor
 from mlflow.models import infer_signature
+from pyspark.sql import SparkSession
 from sklearn.compose import ColumnTransformer
-from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
+from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder
-from datetime import datetime
-from databricks.feature_engineering import FeatureFunction, FeatureLookup
+
 from house_price.config import ProjectConfig
-
-
 
 parser = argparse.ArgumentParser()
 parser.add_argument(
@@ -58,7 +57,7 @@ root_path = args.root_path
 git_sha = args.git_sha
 job_run_id = args.job_run_id
 
-config_path = (f"{root_path}/project_config.yml")
+config_path = f"{root_path}/project_config.yml"
 # config_path = ("/Volumes/mlops_test/house_prices/data/project_config.yml")
 config = ProjectConfig.from_yaml(config_path=config_path)
 
@@ -106,7 +105,7 @@ training_set = fe.create_training_set(
             input_bindings={"year_built": "YearBuilt"},
         ),
     ],
-    exclude_columns=["update_timestamp_utc"]
+    exclude_columns=["update_timestamp_utc"],
 )
 
 # Load feature-engineered DataFrame
@@ -126,15 +125,11 @@ y_test = test_set[target]
 preprocessor = ColumnTransformer(
     transformers=[("cat", OneHotEncoder(handle_unknown="ignore"), cat_features)], remainder="passthrough"
 )
-pipeline = Pipeline(
-    steps=[("preprocessor", preprocessor), ("regressor", LGBMRegressor(**parameters))]
-)
+pipeline = Pipeline(steps=[("preprocessor", preprocessor), ("regressor", LGBMRegressor(**parameters))])
 
 mlflow.set_experiment(experiment_name="/Shared/house-prices-fe")
 
-with mlflow.start_run(tags={"branch": "week5",
-                            "git_sha": f"{git_sha}",
-                            "job_run_id": job_run_id}) as run:
+with mlflow.start_run(tags={"branch": "week5", "git_sha": f"{git_sha}", "job_run_id": job_run_id}) as run:
     run_id = run.info.run_id
     pipeline.fit(X_train, y_train)
     y_pred = pipeline.predict(X_test)
@@ -164,5 +159,5 @@ with mlflow.start_run(tags={"branch": "week5",
         signature=signature,
     )
 
-model_uri=f'runs:/{run_id}/lightgbm-pipeline-model-fe'
+model_uri = f"runs:/{run_id}/lightgbm-pipeline-model-fe"
 dbutils.jobs.taskValues.set(key="new_model_uri", value=model_uri)
