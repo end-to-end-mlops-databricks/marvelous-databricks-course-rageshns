@@ -22,6 +22,7 @@ import argparse
 import time
 
 from databricks.sdk import WorkspaceClient
+from pyparsing import col
 from pyspark.sql import SparkSession
 
 from house_price.config import ProjectConfig
@@ -54,13 +55,13 @@ source_data = spark.table(f"{catalog_name}.{schema_name}.source_data")
 # Get max update timestamps from existing data
 max_train_timestamp = (
     spark.table(f"{catalog_name}.{schema_name}.train_set")
-    .select(spark_max("update_timestamp_utc").alias("max_update_timestamp"))
+    .select(max("update_timestamp_utc").alias("max_update_timestamp"))
     .collect()[0]["max_update_timestamp"]
 )
 
 max_test_timestamp = (
     spark.table(f"{catalog_name}.{schema_name}.test_set")
-    .select(spark_max("update_timestamp_utc").alias("max_update_timestamp"))
+    .select(max("update_timestamp_utc").alias("max_update_timestamp"))
     .collect()[0]["max_update_timestamp"]
 )
 
@@ -119,4 +120,4 @@ if affected_rows_train > 0 or affected_rows_test > 0:
 else:
     refreshed = 0
 
-dbutils.jobs.taskValues.set(key="refreshed", value=refreshed)
+workspace.dbutils.jobs.taskValues.set(key="refreshed", value=refreshed)
