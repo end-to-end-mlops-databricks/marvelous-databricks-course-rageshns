@@ -1,6 +1,5 @@
 catalog_name: mlops_students
 schema_name: rageshns
-use_case_name: test
 pipeline_id: 4cae2b09-bf68-449f-8c50-d063e71a8e4d
 
 parameters:

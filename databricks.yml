@@ -132,17 +132,3 @@ targets:
     workspace:
       host: https://dbc-643c4c2b-d6c9.cloud.databricks.com
       root_path: /Workspace/Users/basak@marvelousmlops.io/.bundle/${bundle.target}/${bundle.name}
-
-
-# targets:
-#   dev:
-#     mode: development
-#     default: true
-#     workspace:
-#       host: https://dbc-643c4c2b-d6c9.cloud.databricks.com
-
-  ## Optionally, there could be 'staging' or 'prod' targets here.
-  #
-  # prod:
-  #   workspace:
-  #     host: https://dbc-643c4c2b-d6c9.cloud.databricks.com
