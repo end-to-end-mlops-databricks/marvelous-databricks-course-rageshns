@@ -89,7 +89,7 @@ def create_synthetic_data(df, num_rows=100):
 
 #     # Handle 'avg_price_per_room' to ensure it's positive
     if "LotArea" in synthetic_data.columns:
-        synthetic_data["LotArea"] = synthetic_data["LotArea"].astype(str)
+        synthetic_data["LotArea"] = round(synthetic_data["LotArea"])
 
 
     # Generate unique Booking_IDs
