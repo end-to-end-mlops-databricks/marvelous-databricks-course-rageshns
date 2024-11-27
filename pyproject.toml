@@ -25,15 +25,6 @@ dependencies = ["mlflow==2.17.0",
                 "pre-commit>=4.0.1"
 ]
 
-
-
-
-
-# [build-system]
-# requires = ["pip>=24.2", "setuptools>=58.0.0", "wheel"]
-# build-backend = "setuptools.build_meta"
-
-
 [tool.setuptools.packages.find]
 where =["src"]
 include = ["house_price*"]
@@ -48,28 +39,6 @@ requires = [
   "setuptools>=72.0"]
 build-backend = "setuptools.build_meta"
 
-
-
-# [tool.setuptools]
-# packages = ["house_price"]
-
-# [tool.setuptools.package-data]
-# house_price = ["**/*.py"]
-
-#include = ["my_package", "my_other_package"]
-#exclude = ["my_package.tests*"]
-
-
-#[tool.setuptools.package-data]
-#"*" = ["*.json"]
-
-# [tool.ruff.lint]
-# ignore = [
-#     "F403",
-#     "F405"
-# ]
-# fixable = ["ALL"]
-
 [tool.ruff]
 line-length = 120
 lint.select = [
@@ -79,14 +48,8 @@ lint.select = [
     "B",  # flake8-bugbear rules
     "I",  # isort rules
 ]
-# ignore = [
-#     "",  # line-too-long
-#     "",
-#     "",
-#]
 
 lint.ignore=["E501", "F821", "E402", "B018"]
-
 
 [tool.ruff.format]
 indent-style = "space"

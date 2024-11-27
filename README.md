@@ -26,6 +26,7 @@ venv\Scripts\activate     -windows
 .venv\Scripts\activate   -windows
 uv sync
 uv pip install -r pyproject.toml --all-extras
+
 or
 uv sync --all-extras
 
@@ -54,5 +55,7 @@ databricks fs cp project_config.yml dbfs:/Volumes/mlops_students/rageshns/data/ 
  ```
 develop2
 
-
 uv python pin 3.11.9  -> .python-version --> 3.11.9
+
+Uv pip install build or  python -m build  # if Scripts\python.exe: No module named build failure
+

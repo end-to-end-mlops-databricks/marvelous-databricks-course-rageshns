@@ -120,4 +120,4 @@ if affected_rows_train > 0 or affected_rows_test > 0:
 else:
     refreshed = 0
 
-workspace.dbutils.jobs.taskValues.set(key="refreshed", value=refreshed)
+dbutils.jobs.taskValues.set(key="refreshed", value=refreshed)

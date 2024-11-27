@@ -5,7 +5,7 @@
 
 bundle:
   name: marvelous-databricks-course-rageshns
-  cluster_id: 1014-134439-1sgb0b2m
+  cluster_id: 1019-154602-5rcc6z0c
 
 artifacts:
   default:
@@ -16,7 +16,7 @@ artifacts:
 variables:
   root_path:
     description: root_path for the target
-    default: /Shared/.bundle/${bundle.target}/${bundle.name}
+    default: /Workspace/Users/rageshns@gmail.com/.bundle/${bundle.name}/${bundle.target}/files
   git_sha:
     description: git_sha
     default: abcd
@@ -30,9 +30,9 @@ resources:
     house-price:
       name: house-price-workflow-test-demo
       schedule:
-        quartz_cron_expression: "0 0 6 ? * MON"
+        quartz_cron_expression: "0 40 13 26 1/1 ? *"
         timezone_id: "Europe/Amsterdam"
-        pause_status: ${var.schedule_pause_status}
+        # pause_status: ${var.schedule_pause_status}
       tags:
         project_name: "house-price"
       job_clusters:
@@ -117,18 +117,26 @@ resources:
             parameters:
               - "--root_path"
               - ${var.root_path}
+              # - "--root_path"
+              # - ${var.root_path}
+              # - "--git_sha"
+              # - ${var.git_sha}
+              # - "--job_run_id"
+              # - "{{job.id}}"
+
           libraries:
             - whl: ./dist/*.whl
 
 targets:
-  prod:
-    default: true
-    workspace:
-      host: https://dbc-643c4c2b-d6c9.cloud.databricks.com
-      root_path: ${var.root_path}
+  # prod:
+  #   default: true
+  #   workspace:
+  #     host: https://dbc-643c4c2b-d6c9.cloud.databricks.com
+  #     root_path: ${var.root_path}
 
   dev:
     mode: development
+    default: true
     workspace:
       host: https://dbc-643c4c2b-d6c9.cloud.databricks.com
-      root_path: /Workspace/Users/basak@marvelousmlops.io/.bundle/${bundle.target}/${bundle.name}
+      root_path: /Workspace/Users/rageshns@gmail.com/.bundle/${bundle.name}/${bundle.target}
