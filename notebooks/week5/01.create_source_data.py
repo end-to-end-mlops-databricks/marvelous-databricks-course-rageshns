@@ -25,7 +25,6 @@ import pandas as pd
 from pandas.api.types import CategoricalDtype
 
 
-
 # Define function to create synthetic data without random state
 def create_synthetic_data(df, num_rows=100):
     synthetic_data = pd.DataFrame()
@@ -33,7 +32,7 @@ def create_synthetic_data(df, num_rows=100):
     for column in df.columns:
         print(column)
         a = df[column].unique()
-        p=df[column].value_counts(normalize=True)
+        p = df[column].value_counts(normalize=True)
         print(a)
         print(p)
         if pd.api.types.is_numeric_dtype(df[column]) and column != "Id":
@@ -46,18 +45,16 @@ def create_synthetic_data(df, num_rows=100):
                 synthetic_data[column] = np.random.normal(mean, std, num_rows)
 
         elif pd.api.types.is_categorical_dtype(df[column]) or pd.api.types.is_object_dtype(df[column]):
-            synthetic_data[column] = np.random.choice(
-                df[column].unique(), num_rows
-            )
+            synthetic_data[column] = np.random.choice(df[column].unique(), num_rows)
 
         elif isinstance(df[column].dtype, pd.CategoricalDtype) or isinstance(df[column].dtype, pd.StringDtype):
-            synthetic_data[column] = np.random.choice(
-                df[column].unique(), num_rows
-            )
+            synthetic_data[column] = np.random.choice(df[column].unique(), num_rows)
         elif pd.api.types.is_datetime64_any_dtype(df[column]):
             min_date, max_date = df[column].min(), df[column].max()
             if min_date < max_date:
-                synthetic_data[column] = pd.to_datetime(np.random.randint(min_date.value, max_date.value, dtype=np.int64))
+                synthetic_data[column] = pd.to_datetime(
+                    np.random.randint(min_date.value, max_date.value, dtype=np.int64)
+                )
             else:
                 synthetic_data[column] = [min_date] * num_rows
 
@@ -65,29 +62,28 @@ def create_synthetic_data(df, num_rows=100):
             synthetic_data[column] = np.random.choice(df[column], num_rows)
 
     # Ensure no negative values for counts and other logical constraints
-#     for col in [
+    #     for col in [
 
-# "MSZoning",
-# "Street",
-# "LotShape",
-# "LandContour",
-# "Neighborhood",
-# "YearBuilt",
-# "Condition1",
-# "YearBuilt",
-# "TotalBsmtSF",
-# "HouseStyle",
-# "RoofStyle",
+    # "MSZoning",
+    # "Street",
+    # "LotShape",
+    # "LandContour",
+    # "Neighborhood",
+    # "YearBuilt",
+    # "Condition1",
+    # "YearBuilt",
+    # "TotalBsmtSF",
+    # "HouseStyle",
+    # "RoofStyle",
 
-#     ]:
-#         if col in synthetic_data.columns:
-#             synthetic_data[col] = synthetic_data[col].abs()
-#             synthetic_data[col] = synthetic_data[col].round().astype(int)
+    #     ]:
+    #         if col in synthetic_data.columns:
+    #             synthetic_data[col] = synthetic_data[col].abs()
+    #             synthetic_data[col] = synthetic_data[col].round().astype(int)
 
-#     # Handle 'avg_price_per_room' to ensure it's positive
-#     if "avg_price_per_room" in synthetic_data.columns:
-#         synthetic_data["Alley"] = synthetic_data["Alley"].abs()
-
+    #     # Handle 'avg_price_per_room' to ensure it's positive
+    #     if "avg_price_per_room" in synthetic_data.columns:
+    #         synthetic_data["Alley"] = synthetic_data["Alley"].abs()
 
     # Generate unique Booking_IDs
     # existing_ids = set(df["Id"])
@@ -98,7 +94,6 @@ def create_synthetic_data(df, num_rows=100):
     #         new_ids.append(new_id)
     #         existing_ids.add(new_id)
     # synthetic_data["Id"] = new_ids
-
 
     new_ids = []
     i = max(existing_ids) + 1 if existing_ids else 1
