@@ -60,6 +60,7 @@ class DataProcessor:
         relevant_columns = cat_features + num_features + [target] + ["Id"]
         self.df = self.df[relevant_columns]
         self.df["Id"] = self.df["Id"].astype("str")
+        self.df["LotArea"] = self.df["LotArea"].astype("str")
 
     def split_data(self, test_size=0.2, random_state=42):
         """Split the DataFrame (self.df) into training and test sets."""

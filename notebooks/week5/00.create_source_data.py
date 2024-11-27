@@ -14,6 +14,7 @@ from pyspark.sql.functions import current_timestamp, to_utc_timestamp
 from house_price.config import ProjectConfig
 
 
+
 # Load configuration
 config = ProjectConfig.from_yaml(config_path="/Volumes/mlops_students/rageshns/data/project_config.yml")
 catalog_name = config.catalog_name

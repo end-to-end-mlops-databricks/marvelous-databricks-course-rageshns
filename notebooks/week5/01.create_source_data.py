@@ -3,15 +3,15 @@ import numpy as np
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import current_timestamp, to_utc_timestamp
 from house_price.config import ProjectConfig
-# from databricks.connect import DatabricksSession
+from databricks.connect import DatabricksSession
 
 # Load configuration
 config = ProjectConfig.from_yaml(config_path="project_config.yml")
 catalog_name = config.catalog_name
 schema_name = config.schema_name
 
-spark = SparkSession.builder.getOrCreate()
-# spark = DatabricksSession.builder.profile("mlops_training").getOrCreate()
+# spark = SparkSession.builder.getOrCreate()
+spark = DatabricksSession.builder.profile("mlops_training").getOrCreate()
 
 
 # Load train and test sets
@@ -33,10 +33,13 @@ def create_synthetic_data(df, num_rows=100):
     for column in df.columns:
         print(column)
         a = df[column].unique()
+        print(df[column])
         p=df[column].value_counts(normalize=True)
         print(a)
         print(p)
         if pd.api.types.is_numeric_dtype(df[column]) and column != "Id":
+            # if column in ["LotArea"]:
+            #     synthetic_data[column] = df.astype(str)
             if column in ["YearBuilt", "YearRemodAdd"]:
                 synthetic_data[column] = np.random.randint(
                     df[column].min(), df[column].max() + 1, num_rows
@@ -85,8 +88,8 @@ def create_synthetic_data(df, num_rows=100):
 #             synthetic_data[col] = synthetic_data[col].round().astype(int)
 
 #     # Handle 'avg_price_per_room' to ensure it's positive
-#     if "avg_price_per_room" in synthetic_data.columns:
-#         synthetic_data["Alley"] = synthetic_data["Alley"].abs()
+    if "LotArea" in synthetic_data.columns:
+        synthetic_data["LotArea"] = synthetic_data["LotArea"].astype(str)
 
 
     # Generate unique Booking_IDs
@@ -114,8 +117,8 @@ def create_synthetic_data(df, num_rows=100):
 # Create synthetic data
 synthetic_df = create_synthetic_data(combined_set)
 
-existing_schema = spark.table(f"{catalog_name}.{schema_name}.source_data").schema
-
+existing_schema = spark.table(f"{catalog_name}.{schema_name}.train_set").schema
+print(existing_schema)
 synthetic_spark_df = spark.createDataFrame(synthetic_df, schema=existing_schema)
 
 train_set_with_timestamp = synthetic_spark_df.withColumn(

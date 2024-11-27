@@ -31,6 +31,7 @@ num_features:
   - GarageCars
   - GarageArea
 
+
 cat_features:
   - MSZoning
   - Street
