@@ -107,6 +107,7 @@ test_set = spark.table(f"{catalog_name}.{schema_name}.test_set").toPandas()
 # Cast YearBuilt to int for the function input
 train_set = train_set.withColumn("YearBuilt", train_set["YearBuilt"].cast("int"))
 train_set = train_set.withColumn("Id", train_set["Id"].cast("string"))
+train_set = train_set.withColumn("GarageCars", round(train_set["GarageCars"]).cast("double"))
 
 # Feature engineering setup
 training_set = fe.create_training_set(

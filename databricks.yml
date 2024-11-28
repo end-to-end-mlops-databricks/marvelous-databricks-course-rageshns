@@ -49,7 +49,7 @@ resources:
       tasks:
         - task_key: "preprocessing"
           job_cluster_key: "house-price-cluster"
-          # existing_cluster_id: 1014-134439-1sgb0b2m
+          existing_cluster_id: 1019-154602-5rcc6z0c
           spark_python_task:
             python_file: "week5/preprocess.py"
             parameters:
@@ -57,6 +57,7 @@ resources:
               - ${var.root_path}
           libraries:
            - whl: ./dist/*.whl
+
         - task_key: if_refreshed
           condition_task:
             op: "EQUAL_TO"
@@ -64,12 +65,13 @@ resources:
             right: "1"
           depends_on:
             - task_key: "preprocessing"
+
         - task_key: "train_model"
           depends_on:
             - task_key: "if_refreshed"
               outcome: "true"
           job_cluster_key: "house-price-cluster"
-          # existing_cluster_id: 1014-134439-1sgb0b2m
+          existing_cluster_id: 1019-154602-5rcc6z0c
           spark_python_task:
             python_file: "week5/train_model.py"
             parameters:
@@ -81,11 +83,12 @@ resources:
               - "{{job.id}}"
           libraries:
             - whl: ./dist/*.whl
+
         - task_key: "evaluate_model"
           depends_on:
             - task_key: "train_model"
           job_cluster_key: "house-price-cluster"
-          # existing_cluster_id: 1014-134439-1sgb0b2m
+          existing_cluster_id: 1019-154602-5rcc6z0c
           spark_python_task:
             python_file: "week5/evaluate_model.py"
             parameters:
@@ -99,6 +102,7 @@ resources:
               - ${var.git_sha}
           libraries:
             - whl: ./dist/*.whl
+
         - task_key: model_update
           condition_task:
             op: "EQUAL_TO"
@@ -111,7 +115,7 @@ resources:
             - task_key: "model_update"
               outcome: "true"
           job_cluster_key: "house-price-cluster"
-          # existing_cluster_id: 1014-134439-1sgb0b2m
+          existing_cluster_id: 1019-154602-5rcc6z0c
           spark_python_task:
             python_file: "week5/deploy_model.py"
             parameters:
@@ -128,15 +132,17 @@ resources:
             - whl: ./dist/*.whl
 
 targets:
-  # prod:
-  #   default: true
-  #   workspace:
-  #     host: https://dbc-643c4c2b-d6c9.cloud.databricks.com
-  #     root_path: ${var.root_path}
+  prod:
+    default: false
+    cluster_id: 1019-154602-5rcc6z0c
+    workspace:
+      host: https://dbc-643c4c2b-d6c9.cloud.databricks.com
+      root_path: ${var.root_path}
 
   dev:
     mode: development
     default: true
+    cluster_id: 1019-154602-5rcc6z0c
     workspace:
       host: https://dbc-643c4c2b-d6c9.cloud.databricks.com
       root_path: /Workspace/Users/rageshns@gmail.com/.bundle/${bundle.name}/${bundle.target}
