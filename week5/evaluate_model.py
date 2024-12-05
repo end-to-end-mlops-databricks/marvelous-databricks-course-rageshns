@@ -17,11 +17,13 @@ The evaluation process:
 """
 
 import argparse
+import logging
 from datetime import datetime
 
 import mlflow
 from databricks import feature_engineering
 from databricks.sdk import WorkspaceClient
+
 # from loguru import logger
 from pyspark.ml.evaluation import RegressionEvaluator
 from pyspark.sql import SparkSession
@@ -29,7 +31,7 @@ from pyspark.sql import functions as F
 from pyspark.sql.functions import col
 
 from house_price.config import ProjectConfig
-import logging
+
 logger = logging.getLogger(__name__)
 # Set up logging
 # setup_logging(log_file="")
@@ -92,7 +94,7 @@ try:
     schema_name = config.schema_name
 
     # Define the serving endpoint
-    serving_endpoint_name = "house-prices-model-serving-fe1"
+    serving_endpoint_name = "house-prices-model-serving"
     serving_endpoint = workspace.serving_endpoints.get(serving_endpoint_name)
     model_name = serving_endpoint.config.served_models[0].model_name
     model_version = serving_endpoint.config.served_models[0].model_version

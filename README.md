@@ -20,7 +20,7 @@ To create a new environment and create a lockfile, run:
 
 
 ```
-uv venv -p 3.11.9 venv
+uv venv -p 3.11.9 .venv
 source venv/bin/activate  -linux
 venv\Scripts\activate     -windows
 .venv\Scripts\activate   -windows
@@ -58,3 +58,6 @@ develop2
 uv python pin 3.11.9  -> .python-version --> 3.11.9
 
 Uv pip install build or  python -m build  # if Scripts\python.exe: No module named build failure
+databricks bundle validate
+databricks bundle deploy -t dev
+databricks bundle destroy

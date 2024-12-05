@@ -13,6 +13,7 @@ The model uses both numerical and categorical features, including a custom calcu
 """
 
 import argparse
+import logging
 import sys
 from datetime import datetime
 
@@ -21,6 +22,7 @@ from databricks import feature_engineering
 from databricks.feature_engineering import FeatureFunction, FeatureLookup
 from databricks.sdk import WorkspaceClient
 from lightgbm import LGBMRegressor
+
 # from loguru import logger
 from mlflow.models import infer_signature
 from pyspark.sql import SparkSession
@@ -30,7 +32,7 @@ from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder
 
 from house_price.config import ProjectConfig
-import logging
+
 logger = logging.getLogger(__name__)
 
 # Set up logging
@@ -94,6 +96,8 @@ try:
 
     # Cast YearBuilt to int for the function input
     train_set = train_set.withColumn("YearBuilt", train_set["YearBuilt"].cast("int"))
+    # train_set = train_set.withColumn("GarageCars", train_set["GarageCars"].cast("int"))
+
 
     # Feature engineering setup
     training_set = fe.create_training_set(

@@ -19,29 +19,26 @@ Workflow:
 """
 
 import argparse
+import logging
 import sys
 import time
-import logging
+
 # from loguru import logger
 # from databricks.connect import DatabricksSession
 from databricks.sdk import WorkspaceClient
-# from loguru import logger
 
+# from loguru import logger
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import col
 from pyspark.sql.functions import max as spark_max
-
-from pyspark.sql import SparkSession
 
 from house_price.config import ProjectConfig
 
 workspace = WorkspaceClient()
 # Set up logging
 # setup_logging(log_file="")
-import logging
 logger = logging.getLogger(__name__)
 try:
-    
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--root_path",
@@ -71,7 +68,6 @@ try:
         .select(spark_max("update_timestamp_utc").alias("max_update_timestamp"))
         .collect()[0]["max_update_timestamp"]
     )
-
 
     max_test_timestamp = (
         spark.table(f"{catalog_name}.{schema_name}.test_set")
@@ -117,7 +113,7 @@ try:
             FROM {catalog_name}.{schema_name}.test_set
             WHERE update_timestamp_utc == (SELECT max_update_timestamp FROM max_timestamp)
     """)
-        
+
         refreshed = 1
         # Update the online feature table via pipeline
         logger.info(f"Starting incremental pipeline update for pipeline ID: {pipeline_id}")
@@ -138,10 +134,8 @@ try:
                 print(f"Pipeline is in {state} state.")
             time.sleep(30)
 
-        
     else:
         refreshed = 1
-
 
     # Set task value
     dbutils.jobs.taskValues.set(key="refreshed", value=refreshed)  # noqa: F821

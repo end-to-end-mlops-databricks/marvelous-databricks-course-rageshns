@@ -1,6 +1,6 @@
 catalog_name: mlops_students
 schema_name: rageshns
-pipeline_id: 4c7ef6e4b5-3040-43ef-a7bb-1c1d9200a108 # Pipeline Id under "features_balanced_online" table in catalog. Created in model_serving_feat_lookup_notebook.py
+pipeline_id: f8629722-21da-4eae-8013-d393c7599a08 # Pipeline Id under "features_balanced_online" table in catalog. Created in model_serving_feat_lookup_notebook.py
 
 parameters:
   learning_rate: 0.01

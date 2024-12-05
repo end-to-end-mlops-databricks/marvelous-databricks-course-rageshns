@@ -12,31 +12,30 @@ The endpoint is configured for feature-engineered model serving with automatic s
 """
 
 import argparse
-import sys
-
-from databricks.sdk import WorkspaceClient
-from databricks.sdk.service.serving import ServedEntityInput
-# from loguru import logger
-
-from house_price.config import ProjectConfig
 
 # Set up logging
 # setup_logging(log_file="")
 import logging
+import sys
+
+from databricks.sdk import WorkspaceClient
+from databricks.sdk.service.serving import ServedEntityInput
+
+# from loguru import logger
+from house_price.config import ProjectConfig
+
 logger = logging.getLogger(__name__)
 
 
-
 try:
-
     parser = argparse.ArgumentParser()
     parser.add_argument(
-    "--root_path",
-    action="store",
-    default=None,
-    type=str,
-    required=True,
-)
+        "--root_path",
+        action="store",
+        default=None,
+        type=str,
+        required=True,
+    )
     # Parse arguments
     args = parser.parse_args()
     root_path = args.root_path
@@ -53,7 +52,7 @@ try:
     schema_name = config.schema_name
 
     workspace.serving_endpoints.update_config_and_wait(
-        name="house-prices-model-serving-fe1",
+        name="house-prices-model-serving",
         served_entities=[
             ServedEntityInput(
                 entity_name=f"{catalog_name}.{schema_name}.house_prices_model_fe",

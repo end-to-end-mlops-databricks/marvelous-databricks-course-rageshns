@@ -26,7 +26,7 @@ class DataProcessor:
 
         # Handle missing values and convert data types as needed
         self.df["LotFrontage"] = pd.to_numeric(self.df["LotFrontage"], errors="coerce")
-
+        self.df["GarageCars"] = pd.to_numeric(self.df["GarageCars"], errors="coerce")
         self.df["GarageYrBlt"] = pd.to_numeric(self.df["GarageYrBlt"], errors="coerce")
         median_year = self.df["GarageYrBlt"].median()
         self.df["GarageYrBlt"].fillna(median_year, inplace=True)

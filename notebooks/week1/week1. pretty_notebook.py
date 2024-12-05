@@ -1,5 +1,5 @@
 # Databricks notebook source
-# MAGIC %pip install ../mlops_with_databricks-0.0.1-py3-none-any.whl
+# MAGIC %pip install mlops_with_databricks-0.0.1-py3-none-any.whl
 
 # COMMAND ----------
 
@@ -9,7 +9,7 @@ dbutils.library.restartPython()
 
 import yaml
 
-from house_price.data_processor import DataProcessor
+from house_price.data_processor_week import DataProcessor
 from house_price.price_model import PriceModel
 from house_price.utils import plot_feature_importance, visualize_results
 

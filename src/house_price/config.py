@@ -1,12 +1,14 @@
-import sys
-from typing import Any, Dict, List, Optional
+import logging
+from typing import Any, Dict, List
 
 import yaml
-# from loguru import logger
-from pydantic import BaseModel, Field, ValidationError
 
-import logging
+# from loguru import logger
+from pydantic import BaseModel, Field
+
 logger = logging.getLogger(__name__)
+
+
 class ProjectConfig(BaseModel):
     num_features: List[str]
     cat_features: List[str]
