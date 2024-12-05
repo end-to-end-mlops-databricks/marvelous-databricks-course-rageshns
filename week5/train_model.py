@@ -98,7 +98,6 @@ try:
     train_set = train_set.withColumn("YearBuilt", train_set["YearBuilt"].cast("int"))
     # train_set = train_set.withColumn("GarageCars", train_set["GarageCars"].cast("int"))
 
-
     # Feature engineering setup
     training_set = fe.create_training_set(
         df=train_set,

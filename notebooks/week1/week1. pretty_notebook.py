@@ -1,5 +1,5 @@
 # Databricks notebook source
-# MAGIC %pip install mlops_with_databricks-0.0.1-py3-none-any.whl
+# MAGIC %pip install ../mlops_with_databricks-0.0.1-py3-none-any.whl
 
 # COMMAND ----------
 
@@ -9,7 +9,7 @@ dbutils.library.restartPython()
 
 import yaml
 
-from house_price.data_processor_week import DataProcessor
+from house_price.ab_data_processor import DataProcessor
 from house_price.price_model import PriceModel
 from house_price.utils import plot_feature_importance, visualize_results
 
@@ -22,21 +22,21 @@ print(yaml.dump(config, default_flow_style=False))
 
 # COMMAND ----------
 # Initialize DataProcessor
-data_processor = DataProcessor("/Volumes/mlops_students/rageshns/data/data.csv", config)
+ab_data_processor = DataProcessor("/Volumes/mlops_students/rageshns/data/data.csv", config)
 
 # Preprocess the data
-data_processor.preprocess_data()
+ab_data_processor.preprocess_data()
 
 # COMMAND ----------
 # Split the data
-X_train, X_test, y_train, y_test = data_processor.split_data()
+X_train, X_test, y_train, y_test = ab_data_processor.split_data()
 
 print("Training set shape:", X_train.shape)
 print("Test set shape:", X_test.shape)
 
 # COMMAND ----------
 # Initialize and train the model
-model = PriceModel(data_processor.preprocessor, config)
+model = PriceModel(ab_data_processor.preprocessor, config)
 model.train(X_train, y_train)
 
 # COMMAND ----------
